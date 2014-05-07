@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.Modelo;
+import view.FormularioDeDatos;
 import view.Menu;
 import view.Simulador;
 
@@ -39,6 +40,7 @@ public class Controlador implements ActionListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
         menu.dispose();
         s.mostrar(e.getComponent().getName());
+  
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
