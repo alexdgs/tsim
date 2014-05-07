@@ -50,5 +50,19 @@ public class GeneradorCongruencialMixto {
     public ArrayList<Double> getListaNumerosAleatorios() {
         return listaNumerosAleatorios;
     }
+
+    public int getA() {
+        return a;
+    }
     
+    public int getC() {
+        return c;
+    }
+    public int getM() {
+        return m;
+    }
+
+    public int getX0() {
+        return x0;
+    }
 }

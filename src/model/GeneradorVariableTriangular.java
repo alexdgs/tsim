@@ -42,4 +42,18 @@ public class GeneradorVariableTriangular {
         }
         return res;
     }
+
+    public int getA() {
+        return a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public int getC() {
+        return c;
+    }
+    
+    
 }

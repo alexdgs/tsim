@@ -23,10 +23,11 @@ public class Main {
     public static void main(String[] args) {
         new Thread(new Splash()).start();
         Controlador c = new Controlador();
-        Menu menu = new Menu(c);
+        //Menu menu = new Menu(c);
+        Menu menu = new Menu(new javax.swing.JFrame(), true, c);
         Modelo m = new Modelo(c);
         Simulador s = new Simulador(c);
-        c.setComponents(menu,m,s);
+        c.setComponents(menu, m, s);
         menu.setVisible(true);
     }
     

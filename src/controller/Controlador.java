@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.Modelo;
+import view.FormularioDeDatos;
 import view.Menu;
 import view.Simulador;
+import view.TablaVariacionPrecios;
 
 /**
  *
@@ -37,8 +39,24 @@ public class Controlador implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        menu.dispose();
-        s.mostrar(e.getComponent().getName());
+        if(e.getSource()==menu.getjLabel3()){
+            System.out.println("asdas");
+            menu.dispose();
+            s.mostrar(e.getComponent().getName());
+        }
+        else{
+            if(e.getSource()==s.getJBPlay()){
+                s.setTablaVariacionPrecios(new TablaVariacionPrecios(m));
+                s.getJBVerResultados().setEnabled(true);
+                s.getjTextArea1().setText("");
+                s.getjTextArea1().setText(m.toString());
+            }
+            else{
+                if(e.getSource()==s.getJBVerResultados()){
+                    s.getTablaVariacionPrecios().setVisible(true);
+                }
+            }
+        }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
