@@ -19,7 +19,7 @@ public class Splash extends JFrame implements Runnable{
     /** Creates new form Splash */
     public Splash() {
         JLabel label = new JLabel();
-        ImageIcon icon = new ImageIcon("src/img/hotel_diplomat.jpg");
+        ImageIcon icon = new ImageIcon("src/img/hotel_diplomat1.jpg");
         label.setIcon(icon);
         add(label);
         setUndecorated(true);
@@ -34,7 +34,7 @@ public class Splash extends JFrame implements Runnable{
         try{
             this.setVisible(true);
             System.out.println("Showing");
-            Thread.sleep(1000);
+            Thread.sleep(500);
             this.dispose();
         } catch (InterruptedException ex){
             System.out.print(ex);

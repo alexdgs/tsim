@@ -8,6 +8,7 @@ package view;
 
 import controller.Controlador;
 import java.awt.event.MouseListener;
+
 /**
  *
  * @author Alejandra
@@ -19,6 +20,9 @@ public class Menu extends javax.swing.JDialog {
      */
     public Menu(java.awt.Frame parent, boolean modal, Controlador c) {
         super(parent, modal);
+        
+
+        
         initComponents();
         setLocationRelativeTo(null);
         cantidadHabitaciones.addMouseListener((MouseListener) c);
@@ -210,5 +214,15 @@ public class Menu extends javax.swing.JDialog {
 
     public Object getjLabel3() {
         return mejorPrecio;
+    }
+    public Object getLabelMejorPrecio() {
+        return mejorPrecio;
+    }
+    
+    public Object getLabelCantidadHabitaciones() {
+        return cantidadHabitaciones;
+    }
+    public Object getLabelMejorCombinacion() {
+        return mejorCombinacion;
     }
 }

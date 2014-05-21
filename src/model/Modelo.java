@@ -134,6 +134,108 @@ public class Modelo {
         }
         return res;
     }
+public Object[][] generarTablaMejorIncremento(){
+        
+        ArrayList<Object[]> lista;
+        lista = new ArrayList<>();
+        int n = gcm.getM();
+        int indiceGenerador = 0;
+        int incSimple =0;
+        int incDoble = 0;
+        int incSuite = 0;
+        for(int i=0;i<12;i++){
+            
+            int demSimple = 0;
+            int demDoble = 0;
+            int demSuite = 0;
+            Object [] tupla = new Object[19];
+            
+            int j = 0;
+            int diasDelMes = diasDelMes(i,2014);
+            while(j<diasDelMes && indiceGenerador<n){
+                int demandaDia = gvt.generarValor(gcm.getListaNumerosAleatorios().get(indiceGenerador));
+                int demandaSimpleDia = (int)(demandaDia*this.preferenciaHabitaciones[0]);
+                int demandaDobleDia = (int)(demandaDia*this.preferenciaHabitaciones[1]);
+                int demandaSuiteDia = (int)(demandaDia*this.preferenciaHabitaciones[2]);
+
+                demSimple = demSimple + demandaSimpleDia;
+                demDoble = demDoble + demandaDobleDia;
+                demSuite = demSuite + demandaSuiteDia;
+
+                j++;
+                indiceGenerador++;
+            }
+            demSimple = (int)(demSimple/diasDelMes);
+            demDoble = (int)(demDoble/diasDelMes);
+            demSuite = (int)(demSuite/diasDelMes);
+            int demInsSimple, demInsDoble, demInsSuite;
+            if(demSimple>cantidadHabitaciones[0]){
+                demInsSimple = demSimple-cantidadHabitaciones[0];
+            }
+            else{
+                demInsSimple = 0;
+            }
+            if(demDoble>cantidadHabitaciones[1]){
+                demInsDoble = demDoble-cantidadHabitaciones[1];
+            }
+            else{
+                demInsDoble = 0;
+            }
+            if(demSuite>cantidadHabitaciones[2]){
+                demInsSuite = demSuite-cantidadHabitaciones[2];
+            }
+            else{
+                demInsSuite = 0;
+            }
+            
+            tupla[0] = i+1;
+            tupla[1] = demSimple;
+            tupla[2] = demDoble;
+            tupla[3] = demSuite;
+            tupla[4] = cantidadHabitaciones[0];
+            tupla[5] = cantidadHabitaciones[1];
+            tupla[6] = cantidadHabitaciones[2];
+            tupla[7] = demInsSimple;
+            tupla[8] = demInsDoble;
+            tupla[9] = demInsSuite;
+            lista.add(tupla);
+            
+            incSimple = incSimple + demInsSimple;
+            incDoble = incDoble + demInsDoble;
+            incSuite = incSuite + demInsSuite;
+            
+        }
+        
+        incSimple = (int)incSimple/lista.size();
+        incDoble = (int)incDoble/lista.size();
+        incSuite = (int)incSuite/lista.size();
+        
+        Object[][] res = new Object[lista.size()][15];
+        for(int i=0;i<res.length;i++){
+            Object[] tupla = lista.get(i);
+            tupla[10] = incSimple;
+            tupla[11] = incDoble;
+            tupla[12] = incSuite;
+            tupla[13] = (int)tupla[4]+(int)tupla[10];
+            tupla[14] = (int)tupla[5]+(int)tupla[11];
+            tupla[15] = (int)tupla[6]+(int)tupla[12];
+            
+            if((int)tupla[1]>(int)tupla[13])
+                tupla[16] = (int)tupla[1]-(int)tupla[13];
+            else
+                tupla[16] = 0;
+            if((int)tupla[2]>(int)tupla[14])
+            tupla[17] = (int)tupla[2]-(int)tupla[14];
+            else
+                tupla[17] = 0;
+            if((int)tupla[3]>(int)tupla[15])
+            tupla[18] = (int)tupla[3]-(int)tupla[15];
+            else
+                tupla[18] = 0;
+            res[i] = tupla;
+        }
+        return res;
+    }
 
     public int[] getCantidadHabitaciones() {
         return cantidadHabitaciones;
@@ -228,7 +330,14 @@ public class Modelo {
         }
     }
     
-    public String toString(){
+    public String informePrimerCaso(){
+        String res = new String("***Valores maximo y minimo de demanda del hotel***\n\n"+
+                                "Maximo: "+gvt.getC()+"\nMinimo: "+gvt.getA()+"\n\n"+
+                                "***Cantidad de habitaciones actualmente***\n\n"+
+                                "Habitacion simple: "+cantidadHabitaciones[0]+"\nHabitacion doble: "+cantidadHabitaciones[1]+"\nSuite Jr: "+cantidadHabitaciones[2]+"\n");
+        return res;
+    }
+        public String informeSegundoCaso(){
         String res = new String("***Valores maximo y minimo de demanda del hotel***\n\n"+
                                 "Maximo: "+gvt.getC()+"\nMinimo: "+gvt.getA()+"\n\n"+
                                 "***Cantidad de habitaciones actualmente***\n\n"+

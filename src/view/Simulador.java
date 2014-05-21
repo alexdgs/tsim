@@ -10,6 +10,8 @@ import controller.Controlador;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.*;
+import com.jtattoo.plaf.*;
 
 /**
  *
@@ -17,24 +19,34 @@ import javax.swing.JTextArea;
  */
 public class Simulador extends javax.swing.JFrame {
 
-    TablaVariacionPrecios t;
+    
+    TablaVariacionPrecios tvp;
+    TablaMejorIncremento tmi;
+    Controlador c;
     /**
      * Creates new form Simulador
      */
     public Simulador(Controlador c) {
+        try{
+          UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+            
+        }
+        catch(Exception e){}
         initComponents();
+        this.c=c;
         this.setLocationRelativeTo(null);
-        cambiarModeloJMenuItem.addMouseListener((MouseListener) c);
-        cambiarDatoJMenuItem.addMouseListener((MouseListener) c);
+        cambiarModeloJMenuItem.addMouseListener(c);
+        cambiarDatoJMenuItem.addMouseListener(c);
         JBVerResultados.addMouseListener(c);
         JBPlay.addMouseListener(c);
         JBVerResultados.setEnabled(false);
-        t = null;
+        tvp = null;
+        tmi = null;
     }
     
     public void mostrar(String s) {
         
-        jLabel4.setText(s);
+        tipoJLabel.setText(s);
         this.setVisible(true);
     }
     /**
@@ -60,7 +72,7 @@ public class Simulador extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         JBVerResultados = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        tipoJLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -106,15 +118,30 @@ public class Simulador extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("Velocidad de la Simulación");
 
+        firstJButton.setBackground(new java.awt.Color(0, 0, 51));
+        firstJButton.setForeground(new java.awt.Color(0, 0, 51));
         firstJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/first.png"))); // NOI18N
+        firstJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        JBPlay.setBackground(new java.awt.Color(0, 0, 51));
+        JBPlay.setForeground(new java.awt.Color(0, 0, 51));
         JBPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        JBPlay.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        lastJButton.setBackground(new java.awt.Color(0, 0, 51));
+        lastJButton.setForeground(new java.awt.Color(0, 0, 51));
         lastJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/last.png"))); // NOI18N
+        lastJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        pauseJButton.setBackground(new java.awt.Color(0, 0, 51));
+        pauseJButton.setForeground(new java.awt.Color(0, 0, 51));
         pauseJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pause.png"))); // NOI18N
+        pauseJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        stopJButton.setBackground(new java.awt.Color(0, 0, 51));
+        stopJButton.setForeground(new java.awt.Color(0, 0, 51));
         stopJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/stop.png"))); // NOI18N
+        stopJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 255));
@@ -131,9 +158,11 @@ public class Simulador extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Opción elegida:");
 
-        jLabel4.setText("0");
+        tipoJLabel.setForeground(new java.awt.Color(0, 0, 51));
+        tipoJLabel.setText("0");
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
         jPanel3.setForeground(new java.awt.Color(204, 204, 255));
@@ -179,7 +208,7 @@ public class Simulador extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
+                                .addComponent(tipoJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -192,7 +221,7 @@ public class Simulador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(tipoJLabel))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,21 +265,20 @@ public class Simulador extends javax.swing.JFrame {
             .addGroup(jPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(firstJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(stopJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(firstJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JBPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lastJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pauseJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(printJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                            .addComponent(printJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -366,8 +394,10 @@ public class Simulador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void cambiarModeloJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarModeloJMenuItemActionPerformed
-        Menu m=new Menu(new javax.swing.JFrame(), true);
-        m.setVisible(true);
+        //Menu m=new Menu(new javax.swing.JFrame(), true);
+       Menu m = new Menu(new javax.swing.JFrame(), true, c);
+       c.setComponents(m);
+       m.setVisible(true);
     }//GEN-LAST:event_cambiarModeloJMenuItemActionPerformed
 
     private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
@@ -389,7 +419,6 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
@@ -413,9 +442,10 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JButton pauseJButton;
     private javax.swing.JButton printJButton;
     private javax.swing.JButton stopJButton;
+    private javax.swing.JLabel tipoJLabel;
     // End of variables declaration//GEN-END:variables
 
-    public JButton getJBVerResultados(){
+   public JButton getJBVerResultados(){
         return JBVerResultados;
     }
     
@@ -424,16 +454,34 @@ public class Simulador extends javax.swing.JFrame {
     }
     
     public void setTablaVariacionPrecios(TablaVariacionPrecios t){
-        this.t = t;
+        this.tvp = t;
     }
 
     public TablaVariacionPrecios getTablaVariacionPrecios() {
-        return t;
+        return tvp;
     }
 
     public JTextArea getjTextArea1() {
         return jTextArea1;
     }
     
+    public void setTablaMejorIncremento(TablaMejorIncremento t){
+        this.tmi = t;
+    }
     
+    public TablaMejorIncremento getTablaMejorIncremento(){
+        return tmi;
+    }
+    
+    public JMenuItem getCambiarModeloJMenuItem()
+    {
+        return cambiarModeloJMenuItem;
+    }
+    public void cleanTextArea1() {
+        jTextArea1.setText("");
+    }
+    public void disableButton()
+    {
+        JBVerResultados.setEnabled(false);
+    }
 }

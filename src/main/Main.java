@@ -10,6 +10,8 @@ import controller.Controlador;
 import model.Modelo;
 import view.Menu;
 import view.Simulador;
+import com.jtattoo.plaf.*;
+import javax.swing.*;
 
 /**
  *
@@ -21,9 +23,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Thread(new Splash()).start();
+        Splash splash=new Splash();
+        splash.run();
         Controlador c = new Controlador();
         //Menu menu = new Menu(c);
+        
+        try{
+          UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");   
+        }
+        catch(Exception e){}
+        
         Menu menu = new Menu(new javax.swing.JFrame(), true, c);
         Modelo m = new Modelo(c);
         Simulador s = new Simulador(c);
