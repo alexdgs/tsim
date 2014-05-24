@@ -17,6 +17,16 @@ import model.Modelo;
 public class TablaMejorIncremento extends javax.swing.JDialog {
 
     Object[][] tabla;
+    // Table columns
+    final String[] columns = {
+                "Mes",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "Nro. H. Simple", "Nro. H. Doble", "Nro. H. Suite Jr.",
+                "D. Ins. Simple", "D. Ins. Doble", "D. Ins. Suite Jr.",
+                "Inc. Simple", "Inc. Doble", "Inc. Suite Jr.",
+                "Nro. H. Simple*", "Nro. H. Doble*", "Nro. H. Suite Jr.*",
+                "D. Ins. Simple*", "D. Ins. Doble*", "D. Ins. Suite Jr.*"
+            };
     /**
      * Creates new form TablaVariacionPrecios
      */
@@ -26,10 +36,10 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
     }
-
-    public TablaMejorIncremento(Modelo m) {
+    
+    // Build a new TablaMejorIncremento with no table, and hide it
+    public TablaMejorIncremento() {
         super(new javax.swing.JFrame(), true);
-        tabla = (Object[][]) m.generarTablaMejorIncremento();
         initComponents();
         this.setVisible(false);
         setLocationRelativeTo(null);
@@ -38,7 +48,13 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
     private void aceptarJButtonMousePressed(java.awt.event.MouseEvent evt) {                                            
         this.dispose();
     } 
-
+    
+    // This method set and shows table
+    public void mostrar(Object[][] t) {
+        // Create new TableModel and set it in JTable
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(t,columns));
+        setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,6 +222,4 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
     public void setTabla(Object[][] tabla) {
         this.tabla = tabla;
     }
-    
-    
 }

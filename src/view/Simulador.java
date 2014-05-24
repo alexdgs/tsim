@@ -18,7 +18,16 @@ import com.jtattoo.plaf.*;
  * @author User
  */
 public class Simulador extends javax.swing.JFrame {
-
+    
+    // Simulation model constants
+    final int MEJOR_HABITACIONES = 1;
+    final int MEJOR_PRECIO = 2;
+    final int MEJOR_COMBINACION = 3;
+    
+    // Simulation state constants
+    final int DETENIDO = 4;
+    final int EN_EJECUCION = 5;
+    final int PAUSADO = 6;
     
     TablaVariacionPrecios tvp;
     TablaMejorIncremento tmi;
@@ -40,13 +49,18 @@ public class Simulador extends javax.swing.JFrame {
         JBVerResultados.addMouseListener(c);
         JBPlay.addMouseListener(c);
         JBVerResultados.setEnabled(false);
+        jSlider1.addChangeListener(c);
         tvp = null;
-        tmi = null;
+        tmi = new TablaMejorIncremento(); // Create a hidden TablaMejorIncremento
     }
     
-    public void mostrar(String s) {
-        
-        tipoJLabel.setText(s);
+    // Show window elements according to choosen option
+    public void mostrarOpcion(int op) {
+        switch(op) {
+            case MEJOR_HABITACIONES: tipoJLabel.setText("Mejor cantidad de habitaciones"); break;
+            case MEJOR_PRECIO: tipoJLabel.setText("Mejor precio de habitaciones"); break;
+            case MEJOR_COMBINACION: tipoJLabel.setText("Mejor combinación: precio y habitaciones"); break;
+        }
         this.setVisible(true);
     }
     /**
@@ -76,6 +90,10 @@ public class Simulador extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        tipoJLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        tipoJLabel2 = new javax.swing.JLabel();
         printJButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -92,6 +110,7 @@ public class Simulador extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Hotel Diplomat");
         setResizable(false);
 
         jPanel.setBackground(new java.awt.Color(0, 0, 51));
@@ -117,6 +136,11 @@ public class Simulador extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("Velocidad de la Simulación");
+
+        jSlider1.setBackground(new java.awt.Color(0, 0, 51));
+        jSlider1.setMaximum(1000);
+        jSlider1.setMinimum(10);
+        jSlider1.setValue(500);
 
         firstJButton.setBackground(new java.awt.Color(0, 0, 51));
         firstJButton.setForeground(new java.awt.Color(0, 0, 51));
@@ -158,7 +182,6 @@ public class Simulador extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Opción elegida:");
 
         tipoJLabel.setForeground(new java.awt.Color(0, 0, 51));
@@ -188,9 +211,22 @@ public class Simulador extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Velocidad actual:");
+
+        tipoJLabel1.setForeground(new java.awt.Color(0, 0, 51));
+        tipoJLabel1.setText("500 ms/día");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setText("Estado de la Simulación:");
+
+        tipoJLabel2.setForeground(new java.awt.Color(0, 0, 51));
+        tipoJLabel2.setText("Detenido");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,13 +240,20 @@ public class Simulador extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(JBVerResultados))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tipoJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipoJLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipoJLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -222,8 +265,16 @@ public class Simulador extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tipoJLabel))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tipoJLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tipoJLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JBVerResultados)
                 .addGap(23, 23, 23))
@@ -242,8 +293,9 @@ public class Simulador extends javax.swing.JFrame {
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(jLabel5)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelLayout.createSequentialGroup()
@@ -395,9 +447,8 @@ public class Simulador extends javax.swing.JFrame {
 
     private void cambiarModeloJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarModeloJMenuItemActionPerformed
         //Menu m=new Menu(new javax.swing.JFrame(), true);
-       Menu m = new Menu(new javax.swing.JFrame(), true, c);
-       c.setComponents(m);
-       m.setVisible(true);
+       //Menu m = new Menu(new javax.swing.JFrame(), true, c);
+       c.showMenu(true);
     }//GEN-LAST:event_cambiarModeloJMenuItemActionPerformed
 
     private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
@@ -419,7 +470,9 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -443,6 +496,8 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JButton printJButton;
     private javax.swing.JButton stopJButton;
     private javax.swing.JLabel tipoJLabel;
+    private javax.swing.JLabel tipoJLabel1;
+    private javax.swing.JLabel tipoJLabel2;
     // End of variables declaration//GEN-END:variables
 
    public JButton getJBVerResultados(){
@@ -483,5 +538,35 @@ public class Simulador extends javax.swing.JFrame {
     public void disableButton()
     {
         JBVerResultados.setEnabled(false);
+    }
+    
+    // Sets speed text to delay value
+    public void setSpeed(int delay) {
+        tipoJLabel1.setText(delay + " ms/día");
+    }
+    
+    // Sends results table from Controller to adecuate table frame and show
+    public void mostrarResultados(Object[][] tabla, int op) {
+        switch(op) {
+            case 1: tmi.mostrar(tabla);
+        }
+    }
+    
+    // Enables results button and shows result text
+    public void enableResults(boolean b, String s) {
+        JBVerResultados.setEnabled(b);
+        jTextArea1.setText(s);
+    }
+    
+    // Sets interface elements to match current simulation state
+    public void setSimState(int st) {
+        switch(st) {
+            case DETENIDO:
+                tipoJLabel2.setText("Detenido");
+                break;
+            case EN_EJECUCION:
+                tipoJLabel2.setText("En ejecución");
+                break;
+        }
     }
 }

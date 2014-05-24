@@ -50,6 +50,11 @@ public class GeneradorCongruencialMixto {
     public ArrayList<Double> getListaNumerosAleatorios() {
         return listaNumerosAleatorios;
     }
+    
+    // This method returns the cycle (period) length of the GCM
+    public int getL() {
+        return listaNumerosAleatorios.size();
+    }
 
     public int getA() {
         return a;

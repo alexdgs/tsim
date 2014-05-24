@@ -35,7 +35,10 @@ public class Menu extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
     }
-
+    
+    public void mostrar(boolean b) {
+        setVisible(b);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +59,8 @@ public class Menu extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPane3 = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Menú de modelos");
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
