@@ -39,6 +39,7 @@ public class Modelo {
     Controlador c;
     
     MejorIncrementoHabitaciones mih;
+    MejorIncrementoPrecio mip;
     Timer t;
     
     public Modelo(Controlador c) {
@@ -52,98 +53,7 @@ public class Modelo {
         this.c = c;
         t = new Timer(500,c);
         mih = new MejorIncrementoHabitaciones(c);
-    }
-    
-    public Object[][] generarTablaVariacionPrecios(){
-        
-        ArrayList<Object[]> lista;
-        lista = new ArrayList<>();
-        int n = gcm.getM();
-        int indiceGenerador = 0;
-        for(int i=0;i<12;i++){
-            
-            int acumSimpleAct = 0;
-            int acumDobleAct = 0;
-            int acumSuiteAct = 0;
-            int acumSimpleInc = 0;
-            int acumDobleInc = 0;
-            int acumSuiteInc = 0;
-            Object [] tupla = new Object[15];
-            
-            int j = 0;
-            int diasDelMes = diasDelMes(i,2014);
-            while(j<diasDelMes && indiceGenerador<n){
-                int demandaDia = gvt.generarValor(gcm.getListaNumerosAleatorios().get(indiceGenerador));
-                int demandaSimpleDiaT = (int)(demandaDia*this.preferenciaHabitaciones[0]);
-                int demandaDobleDiaT = (int)(demandaDia*this.preferenciaHabitaciones[1]);
-                int demandaSuiteDiaT = (int)(demandaDia*this.preferenciaHabitaciones[2]);
-                int demandaSimpleDia;
-                int demandaDobleDia;
-                int demandaSuiteDia;
-                if(demandaSimpleDiaT>cantidadHabitaciones[0])
-                    demandaSimpleDia = cantidadHabitaciones[0];
-                else
-                    demandaSimpleDia = demandaSimpleDiaT;
-                if(demandaDobleDiaT>cantidadHabitaciones[1])
-                    demandaDobleDia = cantidadHabitaciones[1];
-                else
-                    demandaDobleDia = demandaDobleDiaT;
-                if(demandaSuiteDiaT>cantidadHabitaciones[2])
-                    demandaSuiteDia = cantidadHabitaciones[2];
-                else
-                    demandaSuiteDia = demandaSuiteDiaT;
-                acumSimpleAct = acumSimpleAct + demandaSimpleDia;
-                acumDobleAct = acumDobleAct + demandaDobleDia;
-                acumSuiteAct = acumSuiteAct + demandaSuiteDia;
-                int demandaSimpleDiaIncT = (int)(demandaSimpleDiaT*this.aceptacionIncremento[0]);
-                int demandaDobleDiaIncT = (int)(demandaDobleDiaT*this.aceptacionIncremento[1]);
-                int demandaSuiteDiaIncT = (int)(demandaSuiteDiaT*this.aceptacionIncremento[2]);
-                int demandaSimpleDiaInc;
-                int demandaDobleDiaInc;
-                int demandaSuiteDiaInc;
-                if(demandaSimpleDiaIncT>cantidadHabitaciones[0])
-                    demandaSimpleDiaInc = cantidadHabitaciones[0];
-                else
-                    demandaSimpleDiaInc = demandaSimpleDiaIncT;
-                if(demandaDobleDiaIncT>cantidadHabitaciones[1])
-                    demandaDobleDiaInc = cantidadHabitaciones[1];
-                else
-                    demandaDobleDiaInc = demandaDobleDiaIncT;
-                if(demandaSuiteDiaIncT>cantidadHabitaciones[2])
-                    demandaSuiteDiaInc = cantidadHabitaciones[2];
-                else
-                    demandaSuiteDiaInc = demandaSuiteDiaIncT;
-                acumSimpleInc = acumSimpleInc + demandaSimpleDiaInc;
-                acumDobleInc = acumDobleInc + demandaDobleDiaInc;
-                acumSuiteInc = acumSuiteInc + demandaSuiteDiaInc;
-                j++;
-                indiceGenerador++;
-            }
-            
-            tupla[0] = i+1;
-            tupla[1] = acumSimpleAct;
-            tupla[2] = acumDobleAct;
-            tupla[3] = acumSuiteAct;
-            tupla[4] = acumSimpleAct*this.precioActual[0];
-            tupla[5] = acumDobleAct*this.precioActual[1];
-            tupla[6] = acumSuiteAct*this.precioActual[2];
-            tupla[7] = (double)tupla[4] + (double)tupla[5] + (double)tupla[6];
-            tupla[8] = acumSimpleInc;
-            tupla[9] = acumDobleInc;
-            tupla[10] = acumSuiteInc;
-            tupla[11] = acumSimpleInc*this.precioIncrementado[0];
-            tupla[12] = acumDobleInc*this.precioIncrementado[1];
-            tupla[13] = acumSuiteInc*this.precioIncrementado[2];
-            tupla[14] = (double)tupla[11] + (double)tupla[12] + (double)tupla[13];
-            
-            lista.add(tupla);
-            
-        }
-        Object[][] res = new Object[lista.size()][15];
-        for(int i=0;i<res.length;i++){
-            res[i] = lista.get(i);
-        }
-        return res;
+        mip = new MejorIncrementoPrecio(this);
     }
     
     public int[] getCantidadHabitaciones() {
@@ -238,23 +148,7 @@ public class Modelo {
                 "El mes debe estar entre 0 y 11");
         }
     }
-    
-        public String informeSegundoCaso(){
-        String res = new String("***Valores maximo y minimo de demanda del hotel***\n\n"+
-                                "Maximo: "+gvt.getC()+"\nMinimo: "+gvt.getA()+"\n\n"+
-                                "***Cantidad de habitaciones actualmente***\n\n"+
-                                "Habitacion simple: "+cantidadHabitaciones[0]+"\nHabitacion doble: "+cantidadHabitaciones[1]+"\nSuite Jr: "+cantidadHabitaciones[2]+"\n\n"+
-                                "***Precio actual de las habitaciones***\n\n"+
-                                "Habitacion simple: "+precioActual[0]+"\nHabitacion doble: "+precioActual[1]+"\nSuite Jr: "+precioActual[2]+"\n\n"+
-                                "***Precio incrementado de las habitaciones***\n\n"+
-                                "Habitacion simple: "+precioIncrementado[0]+"\nHabitacion doble: "+precioIncrementado[1]+"\nSuite Jr: "+precioIncrementado[2]+"\n\n"+
-                                "***Porcentaje de preferencia por las habitaciones***\n\n"+
-                                "Habitacion simple: "+preferenciaHabitaciones[0]+"\nHabitacion doble: "+preferenciaHabitaciones[1]+"\nSuite Jr: "+preferenciaHabitaciones[2]+"\n\n"+
-                                "***Probabilidad de aceptacion del precio incrementado***\n\n"+
-                                "Habitacion simple: "+aceptacionIncremento[0]+"\nHabitacion doble: "+aceptacionIncremento[1]+"\nSuite Jr: "+aceptacionIncremento[2]+"\n");
-        return res;
-    }
-    
+      
     // Start simulation
     public void play() {
         t.start();
@@ -274,6 +168,7 @@ public class Modelo {
     public boolean nextStep(int op) {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.nextStep();
+            case MEJOR_PRECIO: return mip.nextStep();
         }
         return true;
     }
@@ -281,6 +176,7 @@ public class Modelo {
     public String getResultText(int op) {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getInforme();
+            case MEJOR_PRECIO: return mip.getInforme();
         }
         return null;
     }
@@ -289,6 +185,7 @@ public class Modelo {
     public Object[][] getTabla(int op) {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getTabla();
+            case MEJOR_PRECIO: return mip.getTabla();
             //case 2: return vph.getTablaVariacionPrecios();
             //case 3: return mc.getTablaMejorCombinacion();
         }

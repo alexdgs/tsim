@@ -50,7 +50,7 @@ public class Simulador extends javax.swing.JFrame {
         JBPlay.addMouseListener(c);
         JBVerResultados.setEnabled(false);
         jSlider1.addChangeListener(c);
-        tvp = null;
+        tvp = new TablaVariacionPrecios();
         tmi = new TablaMejorIncremento(); // Create a hidden TablaMejorIncremento
     }
     
@@ -548,7 +548,8 @@ public class Simulador extends javax.swing.JFrame {
     // Sends results table from Controller to adecuate table frame and show
     public void mostrarResultados(Object[][] tabla, int op) {
         switch(op) {
-            case 1: tmi.mostrar(tabla);
+            case 1: tmi.mostrar(tabla); break;
+            case 2: tvp.mostrar(tabla); break;
         }
     }
     

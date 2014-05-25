@@ -16,6 +16,15 @@ import model.Modelo;
 public class TablaVariacionPrecios extends javax.swing.JDialog {
 
     Object[][] tabla;
+    final String[] columns = {
+                "Mes",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Ingreso Actual",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Ingreso Incrementado"
+            };
     /**
      * Creates new form TablaVariacionPrecios
      */
@@ -26,9 +35,8 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
 
-    public TablaVariacionPrecios(Modelo m) {
+    public TablaVariacionPrecios() {
         super(new javax.swing.JFrame(), true);
-        tabla = (Object[][]) m.generarTablaVariacionPrecios();
         initComponents();
         this.setVisible(false);
         setLocationRelativeTo(null);
@@ -58,15 +66,7 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             tabla,
-            new String [] {
-                "Mes",
-                "D. Simple", "D. Doble", "D. Suite Jr.",
-                "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Total Ingreso Actual",
-                "D. Simple", "D. Doble", "D. Suite Jr.",
-                "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Total Ingreso Incrementado"
-            }
+            columns
         ));
         jTable1.getTableHeader().setResizingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
@@ -209,5 +209,9 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
         this.tabla = tabla;
     }
     
-    
+    public void mostrar(Object[][] t) {
+        // Create new TableModel and set it in JTable
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(t,columns));
+        setVisible(true);
+    }
 }

@@ -93,10 +93,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             {
                 if(tipo==2)
                 {
-                  s.setTablaVariacionPrecios(new TablaVariacionPrecios(m));
-                  s.cleanTextArea1();
-                  s.getjTextArea1().setText(m.informeSegundoCaso());
-                  //s.mostrar("2");
+                    //s.setTablaVariacionPrecios(new TablaVariacionPrecios(m));
+                     //s.cleanTextArea1();
+                    //s.getjTextArea1().setText(m.informeSegundoCaso());
+                    //s.mostrar("2");
+                    m.play();
+                    s.setSimState(EN_EJECUCION);
                 }
                 else
                    if(tipo==1)
