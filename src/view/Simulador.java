@@ -46,12 +46,12 @@ public class Simulador extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         cambiarModeloJMenuItem.addMouseListener(c);
         cambiarDatoJMenuItem.addMouseListener(c);
-        pieCantHabJMenuItem.addMouseListener(c);
+        pieChartJButton.addMouseListener(c);
         JBVerResultados.addMouseListener(c);
         JBPlay.addMouseListener(c);
         graficoJButton.addMouseListener(c);
         JBVerResultados.setEnabled(false);
-        //graficoJButton.setEnabled(false);
+        graficoJButton.setEnabled(false);
         jSlider1.addChangeListener(c);
         tvp = new TablaVariacionPrecios();
         tmi = new TablaMejorIncremento(); // Create a hidden TablaMejorIncremento
@@ -78,6 +78,7 @@ public class Simulador extends javax.swing.JFrame {
         jPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        pieChartJButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         firstJButton = new javax.swing.JButton();
@@ -98,6 +99,7 @@ public class Simulador extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tipoJLabel2 = new javax.swing.JLabel();
         graficoJButton = new javax.swing.JButton();
+        chartComboBox = new javax.swing.JComboBox();
         printJButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -109,7 +111,6 @@ public class Simulador extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         cambiarModeloJMenuItem = new javax.swing.JMenuItem();
         cambiarDatoJMenuItem = new javax.swing.JMenuItem();
-        pieCantHabJMenuItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -125,16 +126,23 @@ public class Simulador extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(0, 0, 51));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ani_background.png"))); // NOI18N
 
+        pieChartJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pieChart.png"))); // NOI18N
+        pieChartJButton.setBorder(null);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pieChartJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 37, Short.MAX_VALUE)
+                .addComponent(pieChartJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -235,6 +243,8 @@ public class Simulador extends javax.swing.JFrame {
 
         graficoJButton.setText("Grafico");
 
+        chartComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Barras", "Doble Eje" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -245,6 +255,8 @@ public class Simulador extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(chartComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(graficoJButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBVerResultados)
@@ -288,7 +300,8 @@ public class Simulador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBVerResultados)
-                    .addComponent(graficoJButton))
+                    .addComponent(graficoJButton)
+                    .addComponent(chartComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -404,19 +417,6 @@ public class Simulador extends javax.swing.JFrame {
         });
         jMenu3.add(cambiarDatoJMenuItem);
 
-        pieCantHabJMenuItem.setText("Pie Cantidad Habitaciones");
-        pieCantHabJMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pieCantHabJMenuItemMousePressed(evt);
-            }
-        });
-        pieCantHabJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pieCantHabJMenuItemActionPerformed(evt);
-            }
-        });
-        jMenu3.add(pieCantHabJMenuItem);
-
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Ayuda");
@@ -470,25 +470,17 @@ public class Simulador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
-    private void cambiarModeloJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarModeloJMenuItemActionPerformed
-
-    }//GEN-LAST:event_cambiarModeloJMenuItemActionPerformed
-
     private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
-        
+
     }//GEN-LAST:event_jMenu3MousePressed
 
     private void cambiarDatoJMenuItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiarDatoJMenuItemMousePressed
-        
+
     }//GEN-LAST:event_cambiarDatoJMenuItemMousePressed
 
-    private void pieCantHabJMenuItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pieCantHabJMenuItemMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pieCantHabJMenuItemMousePressed
+    private void cambiarModeloJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarModeloJMenuItemActionPerformed
 
-    private void pieCantHabJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pieCantHabJMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pieCantHabJMenuItemActionPerformed
+    }//GEN-LAST:event_cambiarModeloJMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,6 +488,7 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JButton JBVerResultados;
     private javax.swing.JMenuItem cambiarDatoJMenuItem;
     private javax.swing.JMenuItem cambiarModeloJMenuItem;
+    private javax.swing.JComboBox chartComboBox;
     private javax.swing.JButton firstJButton;
     private javax.swing.JButton graficoJButton;
     private javax.swing.JLabel jLabel1;
@@ -524,7 +517,7 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton lastJButton;
     private javax.swing.JButton pauseJButton;
-    private javax.swing.JMenuItem pieCantHabJMenuItem;
+    private javax.swing.JButton pieChartJButton;
     private javax.swing.JButton printJButton;
     private javax.swing.JButton stopJButton;
     private javax.swing.JLabel tipoJLabel;
@@ -541,6 +534,14 @@ public class Simulador extends javax.swing.JFrame {
     }
     public JButton getJBGrafico(){
         return graficoJButton;
+    }
+    public JButton getPieChart()
+    {
+        return pieChartJButton;
+    }
+    public JComboBox getChartComboBox()
+    {
+        return chartComboBox;
     }
     public void setTablaVariacionPrecios(TablaVariacionPrecios t){
         this.tvp = t;
@@ -570,16 +571,14 @@ public class Simulador extends javax.swing.JFrame {
     {
         return cambiarDatoJMenuItem;
     }
-    public JMenuItem getPieCantHabJMenuItem()
-    {
-        return pieCantHabJMenuItem;
-    }
+   
     public void cleanTextArea1() {
         jTextArea1.setText("");
     }
     public void disableButton()
     {
         JBVerResultados.setEnabled(false);
+        graficoJButton.setEnabled(false);
     }
     
     // Sets speed text to delay value

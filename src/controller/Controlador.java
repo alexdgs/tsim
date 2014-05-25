@@ -60,6 +60,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             m.stop();
             s.enableResults(true,m.getResultText(tipo));
             s.setSimState(DETENIDO);
+            s.getJBGrafico().setEnabled(true);
         }
     }
 
@@ -124,7 +125,19 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                     if(e.getSource()==s.getJBGrafico())
                     {
                         Grafico g=new Grafico();
-                        g.generarGraficoBarras(m.getTabla(tipo), tipo);
+                        if(s.getChartComboBox().getSelectedIndex()==0)
+                          g.generarGraficoBarras(m.getTabla(tipo), tipo);
+                        else
+                          g.generarGraficoDobleEje(m.getTabla(tipo), tipo);
+                        
+                    }
+                    else
+                    {
+                       if(e.getSource()==s.getPieChart())
+                       {
+                           Grafico g=new Grafico();
+                           g.generarPieHabitaciones(m.getSimple(), m.getDoble(), m.getSuite());
+                       }
                     }
                 }
 
@@ -146,11 +159,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
            }
            else
            {
-               if(e.getSource()==s.getPieCantHabJMenuItem())
-               {
-                  Grafico g=new Grafico();
-                  g.generarPieHabitaciones(m.getSimple(), m.getDoble(), m.getSuite());
-               }
+
            }
        }
        
