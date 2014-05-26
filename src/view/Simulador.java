@@ -29,6 +29,7 @@ public class Simulador extends javax.swing.JFrame {
     final int EN_EJECUCION = 5;
     final int PAUSADO = 6;
     
+    TablaCombinado tc;
     TablaVariacionPrecios tvp;
     TablaMejorIncremento tmi;
     Controlador c;
@@ -54,6 +55,7 @@ public class Simulador extends javax.swing.JFrame {
         JBVerResultados.setEnabled(false);
         graficoJButton.setEnabled(false);
         jSlider1.addChangeListener(c);
+        tc = new TablaCombinado();
         tvp = new TablaVariacionPrecios();
         tmi = new TablaMejorIncremento(); // Create a hidden TablaMejorIncremento
     }
@@ -597,6 +599,7 @@ public class Simulador extends javax.swing.JFrame {
         switch(op) {
             case 1: tmi.mostrar(tabla); break;
             case 2: tvp.mostrar(tabla); break;
+            case 3: tc.mostrar(tabla); break;
         }
     }
     

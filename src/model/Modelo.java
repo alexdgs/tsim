@@ -40,6 +40,7 @@ public class Modelo {
     
     MejorIncrementoHabitaciones mih;
     MejorIncrementoPrecio mip;
+    Combinado mc;
     Timer t;
     
     public Modelo(Controlador c) {
@@ -54,6 +55,7 @@ public class Modelo {
         t = new Timer(500,c);
         mih = new MejorIncrementoHabitaciones(c);
         mip = new MejorIncrementoPrecio(this);
+        mc = new Combinado(this);
     }
     
     public int[] getCantidadHabitaciones() {
@@ -169,6 +171,7 @@ public class Modelo {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.nextStep();
             case MEJOR_PRECIO: return mip.nextStep();
+            case MEJOR_COMBINACION: return mc.nextStep();
         }
         return true;
     }
@@ -177,6 +180,7 @@ public class Modelo {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getInforme();
             case MEJOR_PRECIO: return mip.getInforme();
+            case MEJOR_COMBINACION: return mc.getInforme();
         }
         return null;
     }
@@ -186,6 +190,7 @@ public class Modelo {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getTabla();
             case MEJOR_PRECIO: return mip.getTabla();
+            case MEJOR_COMBINACION: return mc.getTabla();
             //case 2: return vph.getTablaVariacionPrecios();
             //case 3: return mc.getTablaMejorCombinacion();
         }
