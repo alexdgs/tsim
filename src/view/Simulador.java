@@ -49,6 +49,7 @@ public class Simulador extends javax.swing.JFrame {
         pieChartJButton.addMouseListener(c);
         JBVerResultados.addMouseListener(c);
         JBPlay.addMouseListener(c);
+        printJButton.addMouseListener(c);
         graficoJButton.addMouseListener(c);
         JBVerResultados.setEnabled(false);
         graficoJButton.setEnabled(false);
@@ -539,6 +540,10 @@ public class Simulador extends javax.swing.JFrame {
     {
         return pieChartJButton;
     }
+    public JButton getPrintJButton()
+    {
+        return printJButton;
+    }
     public JComboBox getChartComboBox()
     {
         return chartComboBox;
@@ -579,6 +584,7 @@ public class Simulador extends javax.swing.JFrame {
     {
         JBVerResultados.setEnabled(false);
         graficoJButton.setEnabled(false);
+        printJButton.setEnabled(false);
     }
     
     // Sets speed text to delay value
@@ -611,6 +617,7 @@ public class Simulador extends javax.swing.JFrame {
                 break;
         }
     }
+
 
 
 

@@ -222,4 +222,5 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
     public void setTabla(Object[][] tabla) {
         this.tabla = tabla;
     }
+    
 }

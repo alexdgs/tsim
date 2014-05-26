@@ -191,6 +191,13 @@ public class Modelo {
         }
         return null;
     }
+    public String [] getColums(int op) {
+        switch(op) {
+            case MEJOR_HABITACIONES: return mih.getColumns();
+            case MEJOR_PRECIO: return mip.getColumns();
+        }
+        return null;
+    }
     public int getSimple()
     {
         return cantidadHabitaciones[0];
