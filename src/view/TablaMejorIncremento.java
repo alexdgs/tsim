@@ -89,6 +89,7 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
                 "D. Ins. Simple*", "D. Ins. Doble*", "D. Ins. Suite Jr.*"
             }
         ));
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.getTableHeader().setResizingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 

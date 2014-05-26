@@ -7,39 +7,51 @@
 package view;
 
 import java.util.ArrayList;
+import javax.swing.JViewport;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import model.Modelo;
 
 /**
  *
  * @author Jose
  */
-public class TablaVariacionPrecios extends javax.swing.JDialog {
+public class TablaCombinado extends javax.swing.JDialog {
 
     Object[][] tabla;
     final String[] columns = {
                 "Mes",
                 "D. Simple", "D. Doble", "D. Suite Jr.",
+                "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
+                "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
+                "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
                 "I. Simple", "I. Doble", "I. Suite Jr.",
                 "Total Ingreso Actual",
                 "D. Simple", "D. Doble", "D. Suite Jr.",
+                "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
+                "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
                 "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Total Ingreso Incrementado"
+                "Inc. Hab. Simple", "Inc. Hab. Doble", "Inc. Hab. Suite Jr.",
+                "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Nuevo Ingreso"
             };
     /**
      * Creates new form TablaVariacionPrecios
      */
-    public TablaVariacionPrecios(java.awt.Frame parent, boolean modal) {
+    public TablaCombinado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         tabla = new Object[12][15];
         initComponents();
         setLocationRelativeTo(null);
     }
 
-    public TablaVariacionPrecios() {
+    public TablaCombinado() {
         super(new javax.swing.JFrame(), true);
         initComponents();
         this.setVisible(false);
         setLocationRelativeTo(null);
+        TableColumn columnaTabla; 
     }
 
     /**
@@ -105,7 +117,7 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Tabla de variación de precios");
+        jLabel1.setText("Mejor combinación: Precio y Habitaciones");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,20 +180,20 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TablaVariacionPrecios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaCombinado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TablaVariacionPrecios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaCombinado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TablaVariacionPrecios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaCombinado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TablaVariacionPrecios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaCombinado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TablaVariacionPrecios dialog = new TablaVariacionPrecios(new javax.swing.JFrame(), true);
+                TablaCombinado dialog = new TablaCombinado(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -213,6 +225,7 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
     public void mostrar(Object[][] t) {
         // Create new TableModel and set it in JTable
         jTable1.setModel(new javax.swing.table.DefaultTableModel(t,columns));
+        
         setVisible(true);
     }
 }

@@ -29,6 +29,7 @@ public class Simulador extends javax.swing.JFrame {
     final int EN_EJECUCION = 5;
     final int PAUSADO = 6;
     
+    TablaCombinado tc;
     TablaVariacionPrecios tvp;
     TablaMejorIncremento tmi;
     Controlador c;
@@ -53,6 +54,7 @@ public class Simulador extends javax.swing.JFrame {
         JBVerResultados.setEnabled(false);
         graficoJButton.setEnabled(false);
         jSlider1.addChangeListener(c);
+        tc = new TablaCombinado();
         tvp = new TablaVariacionPrecios();
         tmi = new TablaMejorIncremento(); // Create a hidden TablaMejorIncremento
     }
@@ -543,6 +545,15 @@ public class Simulador extends javax.swing.JFrame {
     {
         return chartComboBox;
     }
+    
+    public void setTablaCombinado(TablaCombinado t){
+        this.tc = t;
+    }
+    
+    public TablaCombinado getTablaCombinado(){
+        return tc;
+    }
+    
     public void setTablaVariacionPrecios(TablaVariacionPrecios t){
         this.tvp = t;
     }
@@ -567,6 +578,7 @@ public class Simulador extends javax.swing.JFrame {
     {
         return cambiarModeloJMenuItem;
     }
+    
     public JMenuItem getCambiarDatoJMenuItem()
     {
         return cambiarDatoJMenuItem;
@@ -575,6 +587,7 @@ public class Simulador extends javax.swing.JFrame {
     public void cleanTextArea1() {
         jTextArea1.setText("");
     }
+    
     public void disableButton()
     {
         JBVerResultados.setEnabled(false);
@@ -591,6 +604,7 @@ public class Simulador extends javax.swing.JFrame {
         switch(op) {
             case 1: tmi.mostrar(tabla); break;
             case 2: tvp.mostrar(tabla); break;
+            case 3: tc.mostrar(tabla); break;
         }
     }
     
@@ -611,9 +625,4 @@ public class Simulador extends javax.swing.JFrame {
                 break;
         }
     }
-
-
-
-
-
 }
