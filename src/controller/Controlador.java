@@ -13,13 +13,12 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import model.GenerarPdf;
 import model.Modelo;
 import model.Grafico;
 import view.FormularioDeDatos;
 import view.Menu;
 import view.Simulador;
-import view.TablaMejorIncremento;
-import view.TablaVariacionPrecios;
 
 /**
  *
@@ -41,17 +40,19 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     Modelo m;
     Simulador s;
     int tipo;
-    
+    int nroPdf;
     
     public void setComponents(Menu menu, Modelo m, Simulador s) {
         this.menu = menu;
         this.m = m;
         this.s = s;
         tipo=2;
+        nroPdf=1;
     }
     public void setComponents(Menu m) {
         menu = m;
         tipo=2;
+        nroPdf=1;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -61,6 +62,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             s.enableResults(true,m.getResultText(tipo));
             s.setSimState(DETENIDO);
             s.getJBGrafico().setEnabled(true);
+            s.getPrintJButton().setEnabled(true);
         }
     }
 
@@ -143,6 +145,15 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                        {
                            Grafico g=new Grafico();
                            g.generarPieHabitaciones(m.getSimple(), m.getDoble(), m.getSuite());
+                       }
+                       else
+                       {
+                           if(e.getSource()==s.getPrintJButton())
+                           {
+                               String titulo="Incremento de Habitaciones";
+                               if(tipo==2) titulo="Incremento de Precio";
+                               GenerarPdf pdf=new GenerarPdf(titulo+nroPdf, titulo, m.getTabla(tipo), m.getColums(tipo));
+                           }
                        }
                     }
                 }

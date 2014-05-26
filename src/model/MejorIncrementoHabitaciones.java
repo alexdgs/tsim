@@ -173,4 +173,17 @@ public class MejorIncrementoHabitaciones {
                                 "Habitacion simple: "+cantidadHabitaciones[0]+"\nHabitacion doble: "+cantidadHabitaciones[1]+"\nSuite Jr: "+cantidadHabitaciones[2]+"\n");
         return res;
     }
+    public String [] getColumns()
+    {
+        String[] columns = {
+                "Mes",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "Nro. H. Simple", "Nro. H. Doble", "Nro. H. Suite Jr.",
+                "D. Ins. Simple", "D. Ins. Doble", "D. Ins. Suite Jr.",
+                "Inc. Simple", "Inc. Doble", "Inc. Suite Jr.",
+                "Nro. H. Simple*", "Nro. H. Doble*", "Nro. H. Suite Jr.*",
+                "D. Ins. Simple*", "D. Ins. Doble*", "D. Ins. Suite Jr.*"
+            };
+        return columns;
+    }
 }

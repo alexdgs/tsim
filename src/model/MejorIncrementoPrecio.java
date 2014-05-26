@@ -147,4 +147,17 @@ public class MejorIncrementoPrecio {
                                 "Habitacion simple: "+aceptacionIncremento[0]+"\nHabitacion doble: "+aceptacionIncremento[1]+"\nSuite Jr: "+aceptacionIncremento[2]+"\n");
         return res;
     }
+    public String [] getColumns()
+    {
+        String[] columns = {
+                "Mes",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Ingreso Actual",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Ingreso Incrementado"
+            };
+        return columns;
+    }
 }
