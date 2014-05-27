@@ -42,7 +42,7 @@ public class MejorIncrementoHabitaciones {
         incSimple = 0;
         incDoble = 0;
         incSuite = 0;
-        tabla = new Object[12][27];
+        tabla = new Object[12][33];
     }
     
     // Processes next simulation step (a single day)
@@ -85,12 +85,20 @@ public class MejorIncrementoHabitaciones {
                 tabla[i][21] = (double)0;
                 //ingresos actuales total por mes
                 tabla[i][22] = (double)0;
+                //nuevo numero de habitaciones
+                tabla[i][23] = (int)0;
+                tabla[i][24] = (int)0;
+                tabla[i][25] = (int)0;
+                //precio de las habitaciones
+                tabla[i][26] = (int)0;
+                tabla[i][27] = (int)0;
+                tabla[i][28] = (int)0;
                 //nuevos ingresos por tipo
-                tabla[i][23] = (double)0;
-                tabla[i][24] = (double)0;
-                tabla[i][25] = (double)0;
+                tabla[i][29] = (double)0;
+                tabla[i][30] = (double)0;
+                tabla[i][31] = (double)0;
                 //nuevos ingresos total por mes
-                tabla[i][20] = (double)0;
+                tabla[i][32] = (double)0;
             }
             
             if(j<diasDelMes){
@@ -169,29 +177,38 @@ public class MejorIncrementoHabitaciones {
             //calculamos la nueva demanda insatisfecha
             if((int)tabla[k][1]>(int)tabla[k][13]){
                 tabla[k][16] = (int)tabla[k][1]-(int)tabla[k][13];
-                tabla[k][23] = (double)((int)tabla[k][13]*diasDelMes*precioActual[0]);
+                tabla[k][29] = (double)((int)tabla[k][13]*diasDelMes*precioActual[0]);
             }
             else{
                 tabla[k][16] = 0;
-                tabla[k][23] = (double)(((int)tabla[k][1]-(int)tabla[k][16])*diasDelMes*precioActual[0]);
+                tabla[k][29] = (double)(((int)tabla[k][1]-(int)tabla[k][16])*diasDelMes*precioActual[0]);
             }
             if((int)tabla[k][2]>(int)tabla[k][14]){
                 tabla[k][17] = (int)tabla[k][2]-(int)tabla[k][14];
-                tabla[k][24] = (double)((int)tabla[k][14]*diasDelMes*precioActual[1]);
+                tabla[k][30] = (double)((int)tabla[k][14]*diasDelMes*precioActual[1]);
             }
             else{
                 tabla[k][17] = 0;
-                tabla[k][24] = (double)(((int)tabla[k][2]-(int)tabla[k][17])*diasDelMes*precioActual[1]);
+                tabla[k][30] = (double)(((int)tabla[k][2]-(int)tabla[k][17])*diasDelMes*precioActual[1]);
             }
             if((int)tabla[k][3]>(int)tabla[k][15]){
                 tabla[k][18] = (int)tabla[k][3]-(int)tabla[k][15];
-                tabla[k][25] = (double)((int)tabla[k][15]*diasDelMes*precioActual[2]);
+                tabla[k][31] = (double)((int)tabla[k][15]*diasDelMes*precioActual[2]);
             }
             else{
                 tabla[k][18] = 0;
-                tabla[k][25] = (double)(((int)tabla[k][3]-(int)tabla[k][18])*diasDelMes*precioActual[2]);
+                tabla[k][31] = (double)(((int)tabla[k][3]-(int)tabla[k][18])*diasDelMes*precioActual[2]);
             }
-            tabla[k][26] = (double)tabla[k][23] + (double)tabla[k][24] + (double)tabla[k][25];
+            tabla[k][32] = (double)tabla[k][29] + (double)tabla[k][30] + (double)tabla[k][31];
+            //nuevo numero de habitaciones
+            tabla[k][23] = tabla[k][13];
+            tabla[k][24] = tabla[k][14];
+            tabla[k][25] = tabla[k][15];
+            //precio de las habitaciones
+            tabla[k][26] = precioActual[0];
+            tabla[k][27] = precioActual[1];
+            tabla[k][28] = precioActual[2];
+            //
         }
         return tabla;
     }

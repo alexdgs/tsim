@@ -28,48 +28,93 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class GenerarPdf {
   
-  private static final Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.UNDERLINE, BaseColor.BLUE);
+  private static final Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD, BaseColor.BLACK);
+  private static final Font font2 = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD, BaseColor.BLACK);
+  private static final Font font3 = new Font(Font.FontFamily.TIMES_ROMAN, 13);
   
   private static String file, title;
-  private static Object [] [] data;
-  private static String [] titleTable;
   
-  public GenerarPdf(String name, String title, Object [][] data, String [] titleTabla)
+  public GenerarPdf(String name, String title)
   {
       file= "c:/temp/"+name+".pdf";
       this.title=title;
-      this.data=data;
-      this.titleTable=titleTabla;
-      
-      try {
-        Document document = new Document(PageSize.LETTER.rotate());
-        PdfWriter.getInstance(document, new FileOutputStream(file));
-        document.open();
-        addMetaData(document);
-        addContent(document);
-        document.close();
+  }   
+   
+  public void createTable(Object [] [] data, String [] titleTable)
+  {
+      try 
+      {
+          Document document = new Document(PageSize.LETTER.rotate());
+          PdfWriter.getInstance(document, new FileOutputStream(file));
+          document.open();
+          addMetaData(document);
+          addTittle(document);
+          createTable(document, data, titleTable);
+          document.close();
       } catch (Exception e) {
          e.printStackTrace();
       }
   }
+  
+  public void betterOption(String [] rooms, String [] price, String [] revenue)
+  {
+      try 
+      {
+          Document document = new Document(PageSize.LETTER);
+          PdfWriter.getInstance(document, new FileOutputStream(file));
+          document.open();
+          addMetaData(document);
+          addTittle(document);
+          
+          Paragraph content= new Paragraph();
+          
+          //content.add(new Paragraph("La mejor opcion es: "+ option, font3));          
+          //addEmptyLine(content, 1);
+          
+          content.add(new Paragraph(" Mejor cantidad de habitaciones por tipo: ",font2));
+          addEmptyLine(content, 1);
+          content.add(new Paragraph("   Simple: " + rooms[0], font3));
+          content.add(new Paragraph("   Doble: " + rooms[1], font3));
+          content.add(new Paragraph("   Suite Jr.: "+ rooms[2], font3));
+          addEmptyLine(content, 1);
+          
+          content.add(new Paragraph(" Mejor precio de las habitaciones por tipo: ",font2));
+          addEmptyLine(content, 1);
+          content.add(new Paragraph("   Simple: " + price[0], font3));
+          content.add(new Paragraph("   Doble: " + price[1], font3));
+          content.add(new Paragraph("   Suite Jr.: "+ price[2], font3));
+          addEmptyLine(content, 1);
+          
+          content.add(new Paragraph(" Ingresos por tipo de habitaciones: ",font2));
+          addEmptyLine(content, 1);
+          content.add(new Paragraph("   Simple: " + revenue[0], font3));
+          content.add(new Paragraph("   Doble: " + revenue[1], font3));
+          content.add(new Paragraph("   Suite Jr.: "+ revenue[2], font3));
+          
+          document.add(content);
+          document.close();
+         
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+  }
+  
 
   private static void addMetaData(Document document) {
-    document.addTitle("Graficos PDF");
+    document.addTitle("PDF");
     document.addAuthor(System.getProperty("user.name"));
     document.addCreator(System.getProperty("user.name"));
   }
 
-  private static void addContent(Document document) throws DocumentException
+  private static void addTittle(Document document) throws DocumentException
   {
      Paragraph preface = new Paragraph();
-     preface.add(new Paragraph(title, catFont));
+     preface.add(new Paragraph(title, font1));
      addEmptyLine(preface, 1);
      document.add(preface);
-      createTable(document);
   }
-
-
-  private static  void createTable(Document document) throws BadElementException, DocumentException
+  
+  private static  void createTable(Document document, Object [] [] data, String [] titleTable) throws BadElementException, DocumentException
   { 
     
     int k=0;

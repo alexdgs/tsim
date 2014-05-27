@@ -81,7 +81,7 @@ public class Grafico
                 dataset.setValue(new Double(""+tabla[i][posiciones[j]]), tipo[j], meses[i]);
                 
       
-        String titulo="Comparación de demanda instatisfecha Actual con Mejorado";
+        String titulo="Comparación de demanda insatisfecha Actual con Mejorado";
         if(opcion==2)titulo="Comparación de ingresos Actual con Mejorado";
         else if(opcion==3)titulo="Comparacion de ingresos Actual con Mejorado. Caso combinado";
         
@@ -150,7 +150,7 @@ public class Grafico
         }
 
         
-        String titulo="Comparación de demanda instatisfecha Actual con Mejorado";
+        String titulo="Comparación de demanda insatisfecha Actual con Mejorado";
         if(opcion==2)titulo="Comparación de ingresos Actual con Mejorado";
         else if(opcion==3)titulo="Comparacion de ingresos Actual con Mejorado. Caso combinado";
         

@@ -28,8 +28,10 @@ public class TablaMejorIncremento extends javax.swing.JDialog {
                 "D. Ins. Simple*", "D. Ins. Doble*", "D. Ins. Suite Jr.*",
                 "Ingreso Act. Simple", "Ingreso Act. Doble", "Ingreso Act. Suite Jr.",
                 "Ingreso Act. Mensual",
-                "Ingreso Inc. Simple", "Ingreso Inc. Doble", "Ingreso Inc. Suite Jr.",
-                "Ingreso Inc. Mensual",
+                "Cant. Simple*", "Cant. Doble*", "Cant. Suite Jr.*",
+                "Precio Simple*", "Precio Doble*", "Precio Suite Jr.*",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Nuevo Ingreso"
             };
     /**
      * Creates new form TablaVariacionPrecios

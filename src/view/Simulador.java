@@ -50,6 +50,7 @@ public class Simulador extends javax.swing.JFrame {
         playJButton.addMouseListener(c);
         printJButton.addMouseListener(c);
         graficoJButton.addMouseListener(c);
+        mejorOpJButton.addMouseListener(c);
         resultadosJButton.setEnabled(false);
         graficoJButton.setEnabled(false);
         jSlider1.addChangeListener(c);
@@ -80,6 +81,7 @@ public class Simulador extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         pieChartJButton = new javax.swing.JButton();
+        mejorOpJButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         firstJButton = new javax.swing.JButton();
@@ -130,19 +132,26 @@ public class Simulador extends javax.swing.JFrame {
         pieChartJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pieChart.png"))); // NOI18N
         pieChartJButton.setBorder(null);
 
+        mejorOpJButton.setBackground(new java.awt.Color(0, 0, 0));
+        mejorOpJButton.setForeground(new java.awt.Color(255, 255, 255));
+        mejorOpJButton.setText("Mejor Opcion");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(mejorOpJButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pieChartJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(pieChartJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pieChartJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(mejorOpJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -513,6 +522,7 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton lastJButton;
     private javax.swing.JMenuItem manualJMenuItem;
+    private javax.swing.JButton mejorOpJButton;
     private javax.swing.JMenuItem nuevoJMenuItem;
     private javax.swing.JButton pauseJButton;
     private javax.swing.JButton pieChartJButton;
@@ -543,6 +553,10 @@ public class Simulador extends javax.swing.JFrame {
     public JButton getPrintJButton()
     {
         return printJButton;
+    }
+    public JButton getMejorOpcionJButton()
+    {
+        return mejorOpJButton;
     }
     public JComboBox getChartComboBox()
     {

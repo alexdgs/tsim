@@ -16,8 +16,10 @@ import javax.swing.event.ChangeListener;
 import model.GenerarPdf;
 import model.Modelo;
 import model.Grafico;
+import model.MejorOpcion;
 import view.FormularioDeDatos;
 import view.Menu;
+import view.MostrarMejorOpcion;
 import view.Simulador;
 
 /**
@@ -36,29 +38,30 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     final int DETENIDO = 4;
     final int EN_EJECUCION = 5;
     final int PAUSADO = 6;
+    final int COMPLETADO = 7;
     
     Menu menu;
     Modelo m;
     Simulador s;
     Grafico g;
     FormularioDeDatos f;
-    
-    int tipo;
-    int nroPdf;
+    MostrarMejorOpcion mmo;
+    MejorOpcion mo;
+    public int tipo;
+    int estado;
+    int nroGraficoPdf;
+    int nroMejorOpcionPdf;
     
     public void setComponents(Menu menu, Modelo m, Simulador s) {
         this.menu = menu;
         this.m = m;
         this.s = s;
-        g=new Grafico();
+        g = new Grafico();
+        mo=new MejorOpcion();
         tipo=2;
-        nroPdf=1;
-    }
-    public void setComponents(Menu m) {
-        g=new Grafico();
-        menu = m;
-        tipo=2;
-        nroPdf=1;
+        estado = DETENIDO;
+        nroGraficoPdf=1;
+        nroMejorOpcionPdf=1;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -69,6 +72,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             s.setSimState(DETENIDO);
             s.getJBGrafico().setEnabled(true);
             s.getPrintJButton().setEnabled(true);
+            mo.comparar(m.getTabla(tipo), m);
         }
     }
 
@@ -147,20 +151,42 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                                String titulo="Incremento de Habitaciones";
                                if(tipo==2) titulo="Incremento de Precio";
                                else if(tipo==3) titulo="Combinado, incremento de habitaciones y de precio";
-                               GenerarPdf pdf=new GenerarPdf(titulo+nroPdf, titulo, m.getTabla(tipo), m.getColums(tipo));
-                               nroPdf++;
+                               GenerarPdf pdf=new GenerarPdf(titulo+nroGraficoPdf, titulo);
+                               pdf.createTable(m.getTabla(tipo), m.getColums(tipo));
+                               nroGraficoPdf++;
                            }
                            else
                            {
-                               if(e.getSource()==f.getAceptar())
-                               {
-                                   
+                               if(e.getSource()==s.getMejorOpcionJButton())
+                               {                                
+                                   mmo = new MostrarMejorOpcion(new javax.swing.JFrame(), true, this);
+                                   mmo.setMejorOpcion(mo.getMejorOpcionDeSimulacion());
+                                   mmo.setCantHabitaciones(""+mo.getNumeroHabitacionesSimple(), ""+mo.getNumeroHabitacionesDoble(), ""+mo.getNumeroHabitacionesSuite());
+                                   mmo.setPrecio(""+mo.getPrecioHabitacionSimple(), ""+mo.getPrecioHabitacionDoble(), ""+mo.getPrecioHabitacionSuite());
+                                   mmo.setIngreso(""+mo.getIngresoAnualSimple(), ""+mo.getIngresoAnualDoble(), ""+mo.getIngresoAnualSuite());
+                                   mmo.setVisible(true);
                                }
                                else
                                {
-                                 if(e.getSource()==f.getCancelar())
-                                     f.dispose();
+                                   if(e.getSource()==mmo.getAceptar())
+                                     mmo.dispose();
+                                   else
+                                   {
+                                       if(e.getSource()==mmo.getGenerarPdf())
+                                       {
+                                           GenerarPdf pdf=new GenerarPdf("Mejor opcion"+nroMejorOpcionPdf, "Mejor Opcion");
+
+                                           String [] habitaciones = {""+mo.getNumeroHabitacionesSimple(), ""+mo.getNumeroHabitacionesDoble(), ""+mo.getNumeroHabitacionesSuite()};
+                                           String [] precio = {""+mo.getPrecioHabitacionSimple(), ""+mo.getPrecioHabitacionDoble(), ""+mo.getPrecioHabitacionSuite()};
+                                           String [] ingresos = {""+mo.getIngresoAnualSimple(), ""+mo.getIngresoAnualDoble(), ""+mo.getIngresoAnualSuite()};
+                                           mmo.setVisible(true);
+                                           pdf.betterOption(habitaciones, precio, ingresos);
+                                           nroMejorOpcionPdf++;
+                                       }
+                                   }
+                                   
                                }
+                              
                            }
                        }
                     }

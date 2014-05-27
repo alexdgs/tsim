@@ -36,6 +36,7 @@ public class Modelo {
     double[] preferenciaHabitaciones;
     double[] aceptacionIncremento;
     Controlador c;
+    int ultimaOpcionCorrida;
     
     MejorIncrementoHabitaciones mih;
     MejorIncrementoPrecio mip;
@@ -55,6 +56,87 @@ public class Modelo {
         mih = new MejorIncrementoHabitaciones(this);
         mip = new MejorIncrementoPrecio(this);
         mc = new Combinado(this);
+        ultimaOpcionCorrida = 0;
+    }
+    
+    public Modelo(Modelo modelo){
+        gcm = modelo.getGeneradorCongruencialMixto();
+        gvt = modelo.getGeneradorVariableTriangular();
+        cantidadHabitaciones = modelo.getCantidadHabitaciones();
+        precioActual = modelo.getPrecioActual();
+        precioIncrementado = modelo.getPrecioIncrementado();
+        preferenciaHabitaciones = modelo.getPreferenciaHabitaciones();
+        aceptacionIncremento = modelo.getAceptacionIncremento();
+        c = modelo.getC();
+        t = modelo.getT();
+        mih = modelo.getMih();
+        mip = modelo.getMip();
+        mc = modelo.getMc();
+        ultimaOpcionCorrida = modelo.getUltimaOpcionCorrida();
+    }
+
+    public static GeneradorCongruencialMixto getGCM() {
+        return GCM;
+    }
+
+    public static GeneradorVariableTriangular getGVT() {
+        return GVT;
+    }
+
+    public static int[] getCA() {
+        return CA;
+    }
+
+    public static double[] getPA() {
+        return PA;
+    }
+
+    public static double[] getPI() {
+        return PI;
+    }
+
+    public static double[] getPH() {
+        return PH;
+    }
+
+    public static double[] getAI() {
+        return AI;
+    }
+
+    public int getMEJOR_HABITACIONES() {
+        return MEJOR_HABITACIONES;
+    }
+
+    public int getMEJOR_PRECIO() {
+        return MEJOR_PRECIO;
+    }
+
+    public int getMEJOR_COMBINACION() {
+        return MEJOR_COMBINACION;
+    }
+
+    public GeneradorCongruencialMixto getGcm() {
+        return gcm;
+    }
+
+    public Controlador getC() {
+        return c;
+    }
+
+    public MejorIncrementoHabitaciones getMih() {
+        return mih;
+    }
+
+    public MejorIncrementoPrecio getMip() {
+        return mip;
+    }
+
+    public Combinado getMc() {
+        return mc;
+    }
+
+    public Timer getT() {
+        return t;
     }
     
     public int[] getCantidadHabitaciones() {
@@ -180,9 +262,15 @@ public class Modelo {
     // Do next simulaton step and send response to Controller
     public boolean nextStep(int op) {
         switch(op) {
-            case MEJOR_HABITACIONES: return mih.nextStep();
-            case MEJOR_PRECIO: return mip.nextStep();
-            case MEJOR_COMBINACION: return mc.nextStep();
+            case MEJOR_HABITACIONES:
+                ultimaOpcionCorrida = 1;
+                return mih.nextStep();
+            case MEJOR_PRECIO:
+                ultimaOpcionCorrida = 2;
+                return mip.nextStep();
+            case MEJOR_COMBINACION:
+                ultimaOpcionCorrida = 3;
+                return mc.nextStep();
         }
         return true;
     }
@@ -229,5 +317,9 @@ public class Modelo {
         mih = new MejorIncrementoHabitaciones(this);
         mip = new MejorIncrementoPrecio(this);
         mc = new Combinado(this);
+    }
+
+    private int getUltimaOpcionCorrida() {
+        return ultimaOpcionCorrida;
     }
 }

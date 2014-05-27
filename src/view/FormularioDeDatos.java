@@ -27,8 +27,6 @@ public class FormularioDeDatos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        aceptarJButton.addMouseListener(c);
-        cancelarJButton.addMouseListener(c);
         this.c=c;
         this.m=m;
         
@@ -355,6 +353,11 @@ public class FormularioDeDatos extends javax.swing.JDialog {
         });
 
         cancelarJButton.setText("Cancelar");
+        cancelarJButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelarJButtonMouseClicked(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -458,6 +461,10 @@ public class FormularioDeDatos extends javax.swing.JDialog {
 	   JOptionPane.showMessageDialog (this, "Ingrese todos los datos correctamente.");
         }
     }//GEN-LAST:event_aceptarJButtonMouseClicked
+
+    private void cancelarJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarJButtonMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_cancelarJButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

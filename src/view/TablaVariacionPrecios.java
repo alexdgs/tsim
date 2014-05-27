@@ -6,9 +6,6 @@
 
 package view;
 
-import java.util.ArrayList;
-import model.Modelo;
-
 /**
  *
  * @author Jose
@@ -23,7 +20,11 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
                 "Total Ingreso Actual",
                 "D. Simple", "D. Doble", "D. Suite Jr.",
                 "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Total Ingreso Incrementado"
+                "Total Ingreso Incrementado",
+                "Cant. Simple*", "Cant. Doble*", "Cant. Suite Jr.*",
+                "Precio Simple*", "Precio Doble*", "Precio Suite Jr.*",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Nuevo Ingreso"
             };
     /**
      * Creates new form TablaVariacionPrecios
