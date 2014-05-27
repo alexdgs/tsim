@@ -120,9 +120,6 @@ public class MejorIncrementoPrecio {
             }
         }
         else{
-            i = 0;
-            j = 0;
-            indiceGenerador = 0;
             res = true;
         }
         return res;

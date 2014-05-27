@@ -7,20 +7,15 @@
 package model;
 import java.io.FileOutputStream;
 
-import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.List;
-import com.itextpdf.text.ListItem;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -33,7 +28,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class GenerarPdf {
   
-  private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.UNDERLINE, BaseColor.BLUE);
+  private static final Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.UNDERLINE, BaseColor.BLUE);
   
   private static String file, title;
   private static Object [] [] data;
@@ -47,15 +42,15 @@ public class GenerarPdf {
       this.titleTable=titleTabla;
       
       try {
-       Document document = new Document(PageSize.LEGAL.rotate());
-       PdfWriter.getInstance(document, new FileOutputStream(file));
-       document.open();
-       addMetaData(document);
-       addContent(document);
-       document.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+        Document document = new Document(PageSize.LETTER.rotate());
+        PdfWriter.getInstance(document, new FileOutputStream(file));
+        document.open();
+        addMetaData(document);
+        addContent(document);
+        document.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
   }
 
   private static void addMetaData(Document document) {
@@ -66,36 +61,47 @@ public class GenerarPdf {
 
   private static void addContent(Document document) throws DocumentException
   {
-    Paragraph preface = new Paragraph();
-    preface.add(new Paragraph(title, catFont));
-    addEmptyLine(preface, 4);
-    document.add(preface);
-    document.add(createTable());
+     Paragraph preface = new Paragraph();
+     preface.add(new Paragraph(title, catFont));
+     addEmptyLine(preface, 1);
+     document.add(preface);
+      createTable(document);
   }
 
 
-  private static  PdfPTable createTable() throws BadElementException {
-    PdfPTable table = new PdfPTable(titleTable.length);
-
-    for(int i=0; i<titleTable.length; i++)
-    {
-       PdfPCell c1 = new PdfPCell(new Phrase(titleTable[i]));
-       c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-       table.addCell(c1);
-    }
+  private static  void createTable(Document document) throws BadElementException, DocumentException
+  { 
     
-    table.setHeaderRows(1);
-    
-    for(int i=0; i<12; i++)
+    int k=0;
+    while(k<titleTable.length)
     {
-        for(int j=0; j<titleTable.length; j++)
+        int length=10;
+        if(titleTable.length-k<length)
+            length=titleTable.length-k;
+        
+        PdfPTable table = new PdfPTable(length);
+        for(int i=k; i<k+length; i++)
         {
-            table.addCell(""+data[i][j]);
+            PdfPCell c1 = new PdfPCell(new Phrase(titleTable[i]));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+            
         }
-    }
     
-    return table;
-
+        table.setHeaderRows(1);
+        
+        for(int i=0; i<12; i++)
+            for(int j=k; j<k+length; j++)
+              table.addCell(""+data[i][j]);
+        
+        
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 4);
+        document.add(preface);
+        document.add(table);
+        document.newPage();
+        k+=10;
+    }
   }
 
   private static void addEmptyLine(Paragraph paragraph, int number) {

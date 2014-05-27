@@ -29,13 +29,7 @@ public class Grafico
     
     public void generarPieHabitaciones(int simple, int doble, int suite)
     {
-       int total=simple+doble+suite;
        DefaultPieDataset pieH = new DefaultPieDataset();
-       
-       /*pieH.setValue("Suite. Jr", new Double((suite*100)/total));
-       pieH.setValue("Simple", new Double((simple*100)/total));
-       pieH.setValue("Doble", new Double((doble*100)/total));
-       */
        
        pieH.setValue("Suite. Jr", new Double(suite));
        pieH.setValue("Simple", new Double(simple));
@@ -64,77 +58,107 @@ public class Grafico
         
         int [] primeraOpcion = {7, 16, 8, 17, 9, 18};
         int [] segundaOpcion = {4, 11, 5, 12, 6, 13};
-        int [] terceraOpcion ={};
+        int [] terceraOpcion ={16, 34, 43, 17, 35, 44, 18, 36, 45};
         
-        int [] posiciones =new int [6];
+        int [] posiciones;
         
         if(opcion==1) posiciones=Arrays.copyOfRange(primeraOpcion, 0, 6);
         else
         {
             if(opcion==2) posiciones=Arrays.copyOfRange(segundaOpcion, 0, 6);
-            else posiciones=Arrays.copyOfRange(terceraOpcion, 0, 6);
+            else
+            {
+                posiciones=Arrays.copyOfRange(terceraOpcion, 0, 9);
+                String [] tipo1={"Simple Precio Incrementado", "Simple Ingreso Incrementado", "Simple Mejor Opcion", "Doble Precio Incrementado", "Doble Ingreso Incrementado", "Doble Mejor Opcion",  "Suite Jr. Precio Incrementado", "Suite Jr. Ingreso Incrementado", "Suite Jr. Mejor Opcion"};
+                tipo=Arrays.copyOfRange(tipo1, 0, 9);
+            }
         }
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
+ 
         for(int i=0; i<12; i++)
-            for(int j=0; j<6; j++)
+            for(int j=0; j<tipo.length; j++)
                 dataset.setValue(new Double(""+tabla[i][posiciones[j]]), tipo[j], meses[i]);
-            
-        
+                
+      
         String titulo="Comparación de demanda instatisfecha Actual con Mejorado";
         if(opcion==2)titulo="Comparación de ingresos Actual con Mejorado";
-        else if(opcion==3)titulo="";
+        else if(opcion==3)titulo="Comparacion de ingresos Actual con Mejorado. Caso combinado";
         
         JFreeChart chart = ChartFactory.createBarChart3D( titulo, "Meses", "Valores", dataset, PlotOrientation.VERTICAL, true, true, false );
         
         ChartFrame frame= new ChartFrame(titulo, chart);
         frame.setVisible(true);
-        frame.setSize(1000, 700);
+        frame.setSize(1300, 700);
         frame.setLocationRelativeTo(null);   
     } 
     public void generarGraficoDobleEje(Object [][] tabla, int opcion)
     {  
         int [] primeraOpcion = {7, 8, 9, 16, 17, 18};
         int [] segundaOpcion = {4, 5, 6, 11, 12, 13};
-        int [] terceraOpcion ={};
+        int [] terceraOpcion ={16, 17, 18, 34, 35, 36, 43, 44, 45};
         
-        int [] posiciones =new int [6];
+        int [] posiciones;
         
         if(opcion==1) posiciones=Arrays.copyOfRange(primeraOpcion, 0, 6);
         else
         {
             if(opcion==2) posiciones=Arrays.copyOfRange(segundaOpcion, 0, 6);
-            else posiciones=Arrays.copyOfRange(terceraOpcion, 0, 6);
+            else posiciones=Arrays.copyOfRange(terceraOpcion, 0, 9);
         }
         
         XYSeries actual = new XYSeries("Actual");
         XYSeries mejorado = new XYSeries("Mejorado");
         
-        double valorA=0;
-        double valorM=0;
+        XYSeries precio = new XYSeries("Precio Incrementado");
+        XYSeries ingreso = new XYSeries("Ingreso Incrementado");
+        XYSeries mejorOpcion = new XYSeries("Mejor Opcion");
+        
+        double valor1=0;
+        double valor2=0;
+        double valor3=0;
         
         for(int i=1; i<=12; i++)
         {
-           valorA+=new Double(""+tabla[i-1][posiciones[0]])+new Double(""+tabla[i-1][posiciones[1]])+new Double(""+tabla[i-1][posiciones[2]]);
-           valorM+=new Double(""+tabla[i-1][posiciones[3]])+new Double(""+tabla[i-1][posiciones[4]])+new Double(""+tabla[i-1][posiciones[5]]);
-           actual.add(i, valorA);
-           mejorado.add(i, valorM);
+           valor1+=new Double(""+tabla[i-1][posiciones[0]])+new Double(""+tabla[i-1][posiciones[1]])+new Double(""+tabla[i-1][posiciones[2]]);
+           valor2+=new Double(""+tabla[i-1][posiciones[3]])+new Double(""+tabla[i-1][posiciones[4]])+new Double(""+tabla[i-1][posiciones[5]]);
+           if(opcion==3)
+           {
+               valor3+=new Double(""+tabla[i-1][posiciones[6]])+new Double(""+tabla[i-1][posiciones[7]])+new Double(""+tabla[i-1][posiciones[8]]);
+               precio.add(i, valor1);
+               ingreso.add(i, valor2);
+               mejorOpcion.add(i, valor3);
+           }
+           else
+           {
+              actual.add(i, valor1);
+              mejorado.add(i, valor2);
+           }
         }
         
         XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(actual);
-        dataset.addSeries(mejorado);
+        if(opcion==3)
+        {
+            dataset.addSeries(precio);
+            dataset.addSeries(ingreso);
+            dataset.addSeries(mejorOpcion);
+        }
+        else
+        {
+            dataset.addSeries(actual);
+            dataset.addSeries(mejorado);
+        }
+
         
         String titulo="Comparación de demanda instatisfecha Actual con Mejorado";
         if(opcion==2)titulo="Comparación de ingresos Actual con Mejorado";
-        else if(opcion==3)titulo="";
+        else if(opcion==3)titulo="Comparacion de ingresos Actual con Mejorado. Caso combinado";
         
         JFreeChart chart = ChartFactory.createXYLineChart(titulo,"Meses","Valores",dataset,PlotOrientation.VERTICAL, true, true, false);
-    
+        
         ChartFrame frame= new ChartFrame(titulo, chart);
         frame.setVisible(true);
-        frame.setSize(1000, 700);
+        frame.setSize(1300, 700);
         frame.setLocationRelativeTo(null);   
         
     }

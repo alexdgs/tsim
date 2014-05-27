@@ -317,9 +317,6 @@ public class Combinado {
                 //ingreso con el incremento total por mes
                 tabla[k][46] = (double)tabla[k][43] + (double)tabla[k][44] + (double)tabla[k][45];
             }
-            i = 0;
-            j = 0;
-            indiceGenerador = 0;
             res = true;
         }
         return res;
@@ -343,5 +340,28 @@ public class Combinado {
                                 "***Probabilidad de aceptacion del precio incrementado***\n\n"+
                                 "Habitacion simple: "+aceptacionIncremento[0]+"\nHabitacion doble: "+aceptacionIncremento[1]+"\nSuite Jr: "+aceptacionIncremento[2]+"\n");
         return res;
+    }
+    public String [] getColumns()
+    {
+        String[] columns = {
+                "Mes",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
+                "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
+                "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
+                "Inc. Hab. Simple", "Inc. Hab. Doble", "Inc. Hab. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "D. Simple", "D. Doble", "D. Suite Jr.",
+                "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
+                "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
+                "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
+                "Inc. Hab. Simple", "Inc. Hab. Doble", "Inc. Hab. Suite Jr.",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Cant. Simple*", "Cant. Doble*", "Cant. Suite Jr.*",
+                "Precio Simple*", "Precio Doble*", "Precio Suite Jr.*",
+                "I. Simple", "I. Doble", "I. Suite Jr.",
+                "Total Nuevo Ingreso"
+            };
+        return columns;
     }
 }

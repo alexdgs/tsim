@@ -7,7 +7,6 @@
 package view;
 
 import controller.Controlador;
-import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.*;
@@ -39,7 +38,6 @@ public class Simulador extends javax.swing.JFrame {
     public Simulador(Controlador c) {
         try{
           UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-            
         }
         catch(Exception e){}
         initComponents();
@@ -48,11 +46,11 @@ public class Simulador extends javax.swing.JFrame {
         cambiarModeloJMenuItem.addMouseListener(c);
         cambiarDatoJMenuItem.addMouseListener(c);
         pieChartJButton.addMouseListener(c);
-        JBVerResultados.addMouseListener(c);
-        JBPlay.addMouseListener(c);
+        resultadosJButton.addMouseListener(c);
+        playJButton.addMouseListener(c);
         printJButton.addMouseListener(c);
         graficoJButton.addMouseListener(c);
-        JBVerResultados.setEnabled(false);
+        resultadosJButton.setEnabled(false);
         graficoJButton.setEnabled(false);
         jSlider1.addChangeListener(c);
         tc = new TablaCombinado();
@@ -85,13 +83,13 @@ public class Simulador extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         firstJButton = new javax.swing.JButton();
-        JBPlay = new javax.swing.JButton();
+        playJButton = new javax.swing.JButton();
         lastJButton = new javax.swing.JButton();
         pauseJButton = new javax.swing.JButton();
         stopJButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        JBVerResultados = new javax.swing.JButton();
+        resultadosJButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         tipoJLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -105,18 +103,18 @@ public class Simulador extends javax.swing.JFrame {
         chartComboBox = new javax.swing.JComboBox();
         printJButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        archivoJMenu = new javax.swing.JMenu();
+        nuevoJMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        simulacionJMenu = new javax.swing.JMenu();
         cambiarModeloJMenuItem = new javax.swing.JMenuItem();
         cambiarDatoJMenuItem = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        ayudaJMenu = new javax.swing.JMenu();
+        manualJMenuItem = new javax.swing.JMenuItem();
+        acercaDeJMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Diplomat");
@@ -163,10 +161,10 @@ public class Simulador extends javax.swing.JFrame {
         firstJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/first.png"))); // NOI18N
         firstJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        JBPlay.setBackground(new java.awt.Color(0, 0, 51));
-        JBPlay.setForeground(new java.awt.Color(0, 0, 51));
-        JBPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
-        JBPlay.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playJButton.setBackground(new java.awt.Color(0, 0, 51));
+        playJButton.setForeground(new java.awt.Color(0, 0, 51));
+        playJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/play.png"))); // NOI18N
+        playJButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lastJButton.setBackground(new java.awt.Color(0, 0, 51));
         lastJButton.setForeground(new java.awt.Color(0, 0, 51));
@@ -190,10 +188,10 @@ public class Simulador extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 51));
         jLabel1.setText("ESTADO DE LA SIMULACIÓN");
 
-        JBVerResultados.setText("Ver resultados");
-        JBVerResultados.addActionListener(new java.awt.event.ActionListener() {
+        resultadosJButton.setText("Ver resultados");
+        resultadosJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBVerResultadosActionPerformed(evt);
+                resultadosJButtonActionPerformed(evt);
             }
         });
 
@@ -262,7 +260,7 @@ public class Simulador extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(graficoJButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBVerResultados)
+                        .addComponent(resultadosJButton)
                         .addGap(13, 13, 13))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -302,7 +300,7 @@ public class Simulador extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBVerResultados)
+                    .addComponent(resultadosJButton)
                     .addComponent(graficoJButton)
                     .addComponent(chartComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
@@ -329,7 +327,7 @@ public class Simulador extends javax.swing.JFrame {
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addComponent(firstJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(playJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lastJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -354,7 +352,7 @@ public class Simulador extends javax.swing.JFrame {
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(firstJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(stopJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(playJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lastJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pauseJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(printJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -363,15 +361,15 @@ public class Simulador extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setLabel("Archivo");
+        archivoJMenu.setLabel("Archivo");
 
-        jMenuItem1.setLabel("Nuevo");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        nuevoJMenuItem.setLabel("Nuevo");
+        nuevoJMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                nuevoJMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        archivoJMenu.add(nuevoJMenuItem);
 
         jMenuItem2.setText("Abrir...");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -379,10 +377,10 @@ public class Simulador extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        archivoJMenu.add(jMenuItem2);
 
         jMenuItem3.setText("Guardar...");
-        jMenu1.add(jMenuItem3);
+        archivoJMenu.add(jMenuItem3);
 
         jMenuItem4.setText("Imprimir...");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -390,17 +388,17 @@ public class Simulador extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        archivoJMenu.add(jMenuItem4);
 
         jMenuItem5.setText("Cerrar");
-        jMenu1.add(jMenuItem5);
+        archivoJMenu.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(archivoJMenu);
 
-        jMenu3.setText("Simulación");
-        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+        simulacionJMenu.setText("Simulación");
+        simulacionJMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu3MousePressed(evt);
+                simulacionJMenuMousePressed(evt);
             }
         });
 
@@ -410,7 +408,7 @@ public class Simulador extends javax.swing.JFrame {
                 cambiarModeloJMenuItemActionPerformed(evt);
             }
         });
-        jMenu3.add(cambiarModeloJMenuItem);
+        simulacionJMenu.add(cambiarModeloJMenuItem);
 
         cambiarDatoJMenuItem.setText("Cambiar Datos");
         cambiarDatoJMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -418,24 +416,24 @@ public class Simulador extends javax.swing.JFrame {
                 cambiarDatoJMenuItemMousePressed(evt);
             }
         });
-        jMenu3.add(cambiarDatoJMenuItem);
+        simulacionJMenu.add(cambiarDatoJMenuItem);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(simulacionJMenu);
 
-        jMenu4.setText("Ayuda");
+        ayudaJMenu.setText("Ayuda");
 
-        jMenuItem8.setText("Manual de Usuario");
-        jMenu4.add(jMenuItem8);
+        manualJMenuItem.setText("Manual de Usuario");
+        ayudaJMenu.add(manualJMenuItem);
 
-        jMenuItem9.setText("Acerca de...");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        acercaDeJMenuItem.setText("Acerca de...");
+        acercaDeJMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                acercaDeJMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem9);
+        ayudaJMenu.add(acercaDeJMenuItem);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(ayudaJMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -453,9 +451,9 @@ public class Simulador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void nuevoJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoJMenuItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_nuevoJMenuItemActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -465,17 +463,17 @@ public class Simulador extends javax.swing.JFrame {
     ){
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void JBVerResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBVerResultadosActionPerformed
+    private void resultadosJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultadosJButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JBVerResultadosActionPerformed
+    }//GEN-LAST:event_resultadosJButtonActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void acercaDeJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaDeJMenuItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_acercaDeJMenuItemActionPerformed
 
-    private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
+    private void simulacionJMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simulacionJMenuMousePressed
 
-    }//GEN-LAST:event_jMenu3MousePressed
+    }//GEN-LAST:event_simulacionJMenuMousePressed
 
     private void cambiarDatoJMenuItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiarDatoJMenuItemMousePressed
 
@@ -487,8 +485,9 @@ public class Simulador extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBPlay;
-    private javax.swing.JButton JBVerResultados;
+    private javax.swing.JMenuItem acercaDeJMenuItem;
+    private javax.swing.JMenu archivoJMenu;
+    private javax.swing.JMenu ayudaJMenu;
     private javax.swing.JMenuItem cambiarDatoJMenuItem;
     private javax.swing.JMenuItem cambiarModeloJMenuItem;
     private javax.swing.JComboBox chartComboBox;
@@ -500,17 +499,11 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -519,9 +512,14 @@ public class Simulador extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton lastJButton;
+    private javax.swing.JMenuItem manualJMenuItem;
+    private javax.swing.JMenuItem nuevoJMenuItem;
     private javax.swing.JButton pauseJButton;
     private javax.swing.JButton pieChartJButton;
+    private javax.swing.JButton playJButton;
     private javax.swing.JButton printJButton;
+    private javax.swing.JButton resultadosJButton;
+    private javax.swing.JMenu simulacionJMenu;
     private javax.swing.JButton stopJButton;
     private javax.swing.JLabel tipoJLabel;
     private javax.swing.JLabel tipoJLabel1;
@@ -529,11 +527,11 @@ public class Simulador extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
    public JButton getJBVerResultados(){
-        return JBVerResultados;
+        return resultadosJButton;
     }
     
     public JButton getJBPlay(){
-        return JBPlay;
+        return playJButton;
     }
     public JButton getJBGrafico(){
         return graficoJButton;
@@ -550,15 +548,6 @@ public class Simulador extends javax.swing.JFrame {
     {
         return chartComboBox;
     }
-    
-    public void setTablaCombinado(TablaCombinado t){
-        this.tc = t;
-    }
-    
-    public TablaCombinado getTablaCombinado(){
-        return tc;
-    }
-    
     public void setTablaVariacionPrecios(TablaVariacionPrecios t){
         this.tvp = t;
     }
@@ -583,7 +572,6 @@ public class Simulador extends javax.swing.JFrame {
     {
         return cambiarModeloJMenuItem;
     }
-    
     public JMenuItem getCambiarDatoJMenuItem()
     {
         return cambiarDatoJMenuItem;
@@ -592,10 +580,9 @@ public class Simulador extends javax.swing.JFrame {
     public void cleanTextArea1() {
         jTextArea1.setText("");
     }
-    
     public void disableButton()
     {
-        JBVerResultados.setEnabled(false);
+        resultadosJButton.setEnabled(false);
         graficoJButton.setEnabled(false);
         printJButton.setEnabled(false);
     }
@@ -616,7 +603,7 @@ public class Simulador extends javax.swing.JFrame {
     
     // Enables results button and shows result text
     public void enableResults(boolean b, String s) {
-        JBVerResultados.setEnabled(b);
+        resultadosJButton.setEnabled(b);
         jTextArea1.setText(s);
     }
     
@@ -631,5 +618,10 @@ public class Simulador extends javax.swing.JFrame {
                 break;
         }
     }
+
+
+
+
+
 
 }

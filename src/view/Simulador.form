@@ -4,17 +4,17 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="archivoJMenu">
           <Properties>
             <Property name="label" type="java.lang.String" value="Archivo"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="nuevoJMenuItem">
               <Properties>
                 <Property name="label" type="java.lang.String" value="Nuevo"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nuevoJMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
@@ -45,12 +45,12 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="simulacionJMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simulaci&#xf3;n"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu3MousePressed"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="simulacionJMenuMousePressed"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="cambiarModeloJMenuItem">
@@ -71,22 +71,22 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
+        <Menu class="javax.swing.JMenu" name="ayudaJMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ayuda"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+            <MenuItem class="javax.swing.JMenuItem" name="manualJMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manual de Usuario"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+            <MenuItem class="javax.swing.JMenuItem" name="acercaDeJMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Acerca de..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="acercaDeJMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -155,7 +155,7 @@
                       <Group type="102" attributes="0">
                           <Component id="firstJButton" min="-2" pref="31" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="JBPlay" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="playJButton" min="-2" pref="31" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lastJButton" min="-2" pref="31" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -185,7 +185,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="firstJButton" pref="0" max="32767" attributes="0"/>
                               <Component id="stopJButton" min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="JBPlay" min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="playJButton" min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="lastJButton" min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="pauseJButton" min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="printJButton" min="-2" pref="31" max="-2" attributes="0"/>
@@ -289,7 +289,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="JBPlay">
+        <Component class="javax.swing.JButton" name="playJButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="0" type="rgb"/>
@@ -384,7 +384,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="graficoJButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JBVerResultados" min="-2" max="-2" attributes="0"/>
+                              <Component id="resultadosJButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -435,7 +435,7 @@
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JBVerResultados" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="resultadosJButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="graficoJButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="chartComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -456,12 +456,12 @@
                 <Property name="text" type="java.lang.String" value="ESTADO DE LA SIMULACI&#xd3;N"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="JBVerResultados">
+            <Component class="javax.swing.JButton" name="resultadosJButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver resultados"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBVerResultadosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resultadosJButtonActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">

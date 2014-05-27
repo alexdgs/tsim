@@ -17,39 +17,32 @@ import static model.Modelo.diasDelMes;
  */
 public class MejorIncrementoHabitaciones {
     
-    private static final GeneradorCongruencialMixto GCM = new GeneradorCongruencialMixto(366,7,365,4);
-    private static final GeneradorVariableTriangular GVT = new GeneradorVariableTriangular(43,65,87);
-    private static final int[] CA = {77,7,3};
-    private static final double[] PH = {0.56,0.15,0.29};
     GeneradorCongruencialMixto gcm;
     GeneradorVariableTriangular gvt;
-    
-    ArrayList<Object[]> lista;
     int[] cantidadHabitaciones;
+    double[] precioActual;
     double[] preferenciaHabitaciones;
     int n;
     int indiceGenerador = 0;
-    int incSimple =0;
-    int incDoble = 0;
-    int incSuite = 0;
-    int meses = 12;
     int i = 0;
     int j = 0;
     int diasDelMes;
     int L;
-    int demSimple;
-    int demDoble;
-    int demSuite;
-    Object [] tupla;
+    int incSimple, incDoble, incSuite;
+    Object[][] tabla;
     
-    public MejorIncrementoHabitaciones(Controlador c) {
-        gcm = GCM;
-        gvt = GVT;
+    public MejorIncrementoHabitaciones(Modelo modelo) {
+        gcm = modelo.getGeneradorCongruencialMixto();
+        gvt = modelo.getGeneradorVariableTriangular();
         n = gcm.getM();
         L = gcm.getL();
-        lista = new ArrayList<>();
-        preferenciaHabitaciones = PH;
-        cantidadHabitaciones = CA;
+        preferenciaHabitaciones = modelo.getPreferenciaHabitaciones();
+        cantidadHabitaciones = modelo.getCantidadHabitaciones();
+        precioActual = modelo.getPrecioActual();
+        incSimple = 0;
+        incDoble = 0;
+        incSuite = 0;
+        tabla = new Object[12][27];
     }
     
     // Processes next simulation step (a single day)
@@ -60,10 +53,44 @@ public class MejorIncrementoHabitaciones {
                 // If we're starting a new month, config values
                 // System.out.print("Mes " + i + ": "); // Debug output
                 diasDelMes = diasDelMes(i,2014);
-                demSimple = 0;
-                demDoble = 0;
-                demSuite = 0;
-                tupla = new Object[19];
+                //numero de mes
+                tabla[i][0] = (int)i+1;
+                //demanda actual promedio de cada dia
+                tabla[i][1] = (int)0;
+                tabla[i][2] = (int)0;
+                tabla[i][3] = (int)0;
+                //nro actual de habitaciones
+                tabla[i][4] = cantidadHabitaciones[0];;
+                tabla[i][5] = cantidadHabitaciones[1];;
+                tabla[i][6] = cantidadHabitaciones[2];;
+                //demanda insatisfecha actual
+                tabla[i][7] = (int)0;
+                tabla[i][8] = (int)0;
+                tabla[i][9] = (int)0;
+                //incremento de habitaciones
+                tabla[i][10] = (int)0;
+                tabla[i][11] = (int)0;
+                tabla[i][12] = (int)0;
+                //nuevo numero de habitaciones
+                tabla[i][13] = (int)0;
+                tabla[i][14] = (int)0;
+                tabla[i][15] = (int)0;
+                //nueva demanda insatisfecha
+                tabla[i][16] = (int)0;
+                tabla[i][17] = (int)0;
+                tabla[i][18] = (int)0;
+                //ingresos actuales por tipo
+                tabla[i][19] = (double)0;
+                tabla[i][20] = (double)0;
+                tabla[i][21] = (double)0;
+                //ingresos actuales total por mes
+                tabla[i][22] = (double)0;
+                //nuevos ingresos por tipo
+                tabla[i][23] = (double)0;
+                tabla[i][24] = (double)0;
+                tabla[i][25] = (double)0;
+                //nuevos ingresos total por mes
+                tabla[i][20] = (double)0;
             }
             
             if(j<diasDelMes){
@@ -73,55 +100,47 @@ public class MejorIncrementoHabitaciones {
                 int demandaSimpleDia = (int)(demandaDia*this.preferenciaHabitaciones[0]);
                 int demandaDobleDia = (int)(demandaDia*this.preferenciaHabitaciones[1]);
                 int demandaSuiteDia = (int)(demandaDia*this.preferenciaHabitaciones[2]);
-
-                demSimple = demSimple + demandaSimpleDia;
-                demDoble = demDoble + demandaDobleDia;
-                demSuite = demSuite + demandaSuiteDia;
-
+                //acumulamos la demanda actual del mes
+                tabla[i][1] = (int)tabla[i][1] + demandaSimpleDia;
+                tabla[i][2] = (int)tabla[i][2] + demandaDobleDia;
+                tabla[i][3] = (int)tabla[i][3] + demandaSuiteDia;
                 j++;
                 // System.out.print(j + " "); // Debug output
                 indiceGenerador++;
             } else {
                 // If we reached end of month, create table registry
-                demSimple = (int)(demSimple/diasDelMes);
-                demDoble = (int)(demDoble/diasDelMes);
-                demSuite = (int)(demSuite/diasDelMes);
-                int demInsSimple, demInsDoble, demInsSuite;
-                if(demSimple>cantidadHabitaciones[0]){
-                    demInsSimple = demSimple-cantidadHabitaciones[0];
+                tabla[i][1] = (int)((int)tabla[i][1]/diasDelMes);
+                tabla[i][2] = (int)((int)tabla[i][2]/diasDelMes);
+                tabla[i][3] = (int)((int)tabla[i][3]/diasDelMes);
+                if((int)tabla[i][1]>cantidadHabitaciones[0]){
+                    tabla[i][7] = (int)tabla[i][1]-cantidadHabitaciones[0];
+                    tabla[i][19] = (double)(cantidadHabitaciones[0]*diasDelMes*precioActual[0]);
+                    
                 }
                 else{
-                    demInsSimple = 0;
+                    tabla[i][7] = 0;
+                    tabla[i][19] = (double)(((int)tabla[i][1]-(int)tabla[i][7])*diasDelMes*precioActual[0]);
                 }
-                if(demDoble>cantidadHabitaciones[1]){
-                    demInsDoble = demDoble-cantidadHabitaciones[1];
-                }
-                else{
-                    demInsDoble = 0;
-                }
-                if(demSuite>cantidadHabitaciones[2]){
-                    demInsSuite = demSuite-cantidadHabitaciones[2];
+                if((int)tabla[i][2]>cantidadHabitaciones[1]){
+                    tabla[i][8] = (int)tabla[i][2]-cantidadHabitaciones[1];
+                    tabla[i][20] = (double)(cantidadHabitaciones[1]*diasDelMes*precioActual[1]);
                 }
                 else{
-                    demInsSuite = 0;
+                    tabla[i][8] = 0;
+                    tabla[i][20] = (double)(((int)tabla[i][2]-(int)tabla[i][8])*diasDelMes*precioActual[1]);
                 }
-
-                tupla[0] = i+1;
-                tupla[1] = demSimple;
-                tupla[2] = demDoble;
-                tupla[3] = demSuite;
-                tupla[4] = cantidadHabitaciones[0];
-                tupla[5] = cantidadHabitaciones[1];
-                tupla[6] = cantidadHabitaciones[2];
-                tupla[7] = demInsSimple;
-                tupla[8] = demInsDoble;
-                tupla[9] = demInsSuite;
-                lista.add(tupla);
-
-                incSimple = incSimple + demInsSimple;
-                incDoble = incDoble + demInsDoble;
-                incSuite = incSuite + demInsSuite;
-                
+                if((int)tabla[i][3]>cantidadHabitaciones[2]){
+                    tabla[i][9] = (int)tabla[i][3]-cantidadHabitaciones[2];
+                    tabla[i][21] = (double)(cantidadHabitaciones[2]*diasDelMes*precioActual[2]);
+                }
+                else{
+                    tabla[i][9] = 0;
+                    tabla[i][21] = (double)(((int)tabla[i][3]-(int)tabla[i][9])*diasDelMes*precioActual[2]);
+                }
+                tabla[i][22] = (double)tabla[i][19] + (double)tabla[i][20] + (double)tabla[i][21];
+                incSimple = incSimple + (int)tabla[i][7];
+                incDoble = incDoble + (int)tabla[i][8];
+                incSuite = incSuite + (int)tabla[i][9];
                 j = 0; // Reset current day
                 i++; // Go next month
                 // System.out.println(); // Debug output
@@ -129,46 +148,60 @@ public class MejorIncrementoHabitaciones {
             return false; // We're not ready yet
         } else {
             // If we reached end of year, do final work
-            incSimple = (int)incSimple/lista.size();
-            incDoble = (int)incDoble/lista.size();
-            incSuite = (int)incSuite/lista.size();
+            incSimple = (int)incSimple/12;
+            incDoble = (int)incDoble/12;
+            incSuite = (int)incSuite/12;
             return true; // All done, notify
         }
     }
     
     // Builds and returns result table
     public Object[][] getTabla() {
-        Object[][] res = new Object[lista.size()][15];
-        for(int k=0;k<res.length;k++){
-            Object[] tupla = lista.get(k);
-            tupla[10] = incSimple;
-            tupla[11] = incDoble;
-            tupla[12] = incSuite;
-            tupla[13] = (int)tupla[4]+(int)tupla[10];
-            tupla[14] = (int)tupla[5]+(int)tupla[11];
-            tupla[15] = (int)tupla[6]+(int)tupla[12];
-            
-            if((int)tupla[1]>(int)tupla[13])
-                tupla[16] = (int)tupla[1]-(int)tupla[13];
-            else
-                tupla[16] = 0;
-            if((int)tupla[2]>(int)tupla[14])
-            tupla[17] = (int)tupla[2]-(int)tupla[14];
-            else
-                tupla[17] = 0;
-            if((int)tupla[3]>(int)tupla[15])
-            tupla[18] = (int)tupla[3]-(int)tupla[15];
-            else
-                tupla[18] = 0;
-            res[k] = tupla;
+        for(int k=0;k<12;k++){
+            //calculamos el numero de habitaciones a incrementar
+            tabla[k][10] = incSimple;
+            tabla[k][11] = incDoble;
+            tabla[k][12] = incSuite;
+            //calculamos el nuevo numero de habitaciones
+            tabla[k][13] = (int)tabla[k][4]+(int)tabla[k][10];
+            tabla[k][14] = (int)tabla[k][5]+(int)tabla[k][11];
+            tabla[k][15] = (int)tabla[k][6]+(int)tabla[k][12];
+            //calculamos la nueva demanda insatisfecha
+            if((int)tabla[k][1]>(int)tabla[k][13]){
+                tabla[k][16] = (int)tabla[k][1]-(int)tabla[k][13];
+                tabla[k][23] = (double)((int)tabla[k][13]*diasDelMes*precioActual[0]);
+            }
+            else{
+                tabla[k][16] = 0;
+                tabla[k][23] = (double)(((int)tabla[k][1]-(int)tabla[k][16])*diasDelMes*precioActual[0]);
+            }
+            if((int)tabla[k][2]>(int)tabla[k][14]){
+                tabla[k][17] = (int)tabla[k][2]-(int)tabla[k][14];
+                tabla[k][24] = (double)((int)tabla[k][14]*diasDelMes*precioActual[1]);
+            }
+            else{
+                tabla[k][17] = 0;
+                tabla[k][24] = (double)(((int)tabla[k][2]-(int)tabla[k][17])*diasDelMes*precioActual[1]);
+            }
+            if((int)tabla[k][3]>(int)tabla[k][15]){
+                tabla[k][18] = (int)tabla[k][3]-(int)tabla[k][15];
+                tabla[k][25] = (double)((int)tabla[k][15]*diasDelMes*precioActual[2]);
+            }
+            else{
+                tabla[k][18] = 0;
+                tabla[k][25] = (double)(((int)tabla[k][3]-(int)tabla[k][18])*diasDelMes*precioActual[2]);
+            }
+            tabla[k][26] = (double)tabla[k][23] + (double)tabla[k][24] + (double)tabla[k][25];
         }
-        return res;
+        return tabla;
     }
     
     // Formats and returns informative text
     public String getInforme(){
         String res = new String("***Valores maximo y minimo de demanda del hotel***\n\n"+
                                 "Maximo: "+gvt.getC()+"\nMinimo: "+gvt.getA()+"\n\n"+
+                                "***Precio actual de cada habitacion***\n\n"+
+                                "Habitacion simple: "+precioActual[0]+"\nHabitacion doble: "+precioActual[1]+"\nSuite Jr: "+precioActual[2]+"\n"+
                                 "***Cantidad de habitaciones actualmente***\n\n"+
                                 "Habitacion simple: "+cantidadHabitaciones[0]+"\nHabitacion doble: "+cantidadHabitaciones[1]+"\nSuite Jr: "+cantidadHabitaciones[2]+"\n");
         return res;

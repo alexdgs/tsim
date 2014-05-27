@@ -24,6 +24,7 @@ import view.Simulador;
  *
  * @author User
  */
+
 public class Controlador implements ActionListener, MouseListener, ChangeListener {
     
     // Simulation model constants
@@ -39,6 +40,9 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     Menu menu;
     Modelo m;
     Simulador s;
+    Grafico g;
+    FormularioDeDatos f;
+    
     int tipo;
     int nroPdf;
     
@@ -46,10 +50,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         this.menu = menu;
         this.m = m;
         this.s = s;
+        g=new Grafico();
         tipo=2;
         nroPdf=1;
     }
     public void setComponents(Menu m) {
+        g=new Grafico();
         menu = m;
         tipo=2;
         nroPdf=1;
@@ -71,7 +77,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         if(e.getSource()==menu.getLabelMejorPrecio() || e.getSource()==menu.getLabelCantidadHabitaciones() || e.getSource()==menu.getLabelMejorCombinacion())
         {
             menu.mostrar(false);
-            //s.mostrar(e.getComponent().getName());
             
             tipo=2;
             s.cleanTextArea1();
@@ -98,10 +103,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             {
                 if(tipo==2)
                 {
-                    //s.setTablaVariacionPrecios(new TablaVariacionPrecios(m));
-                     //s.cleanTextArea1();
-                    //s.getjTextArea1().setText(m.informeSegundoCaso());
-                    //s.mostrar("2");
                     m.play();
                     s.setSimState(EN_EJECUCION);
                 }
@@ -111,9 +112,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                        // Start simulation
                         m.play();
                         s.setSimState(EN_EJECUCION);
-                        
-                      //s.cleanTextArea1();
-                      //s.getjTextArea1().setText(m.informePrimerCaso()); //cambiar caso 
                     }
                     else{
                         if(tipo == 3){
@@ -121,7 +119,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                             s.setSimState(EN_EJECUCION);
                         }
                     }
-                //s.getJBVerResultados().setEnabled(true);
             }
             else{
                 if(e.getSource()==s.getJBVerResultados())
@@ -133,7 +130,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 {
                     if(e.getSource()==s.getJBGrafico())
                     {
-                        Grafico g=new Grafico();
                         if(s.getChartComboBox().getSelectedIndex()==0)
                           g.generarGraficoBarras(m.getTabla(tipo), tipo);
                         else
@@ -143,17 +139,28 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                     else
                     {
                        if(e.getSource()==s.getPieChart())
-                       {
-                           Grafico g=new Grafico();
                            g.generarPieHabitaciones(m.getSimple(), m.getDoble(), m.getSuite());
-                       }
                        else
                        {
                            if(e.getSource()==s.getPrintJButton())
                            {
                                String titulo="Incremento de Habitaciones";
                                if(tipo==2) titulo="Incremento de Precio";
+                               else if(tipo==3) titulo="Combinado, incremento de habitaciones y de precio";
                                GenerarPdf pdf=new GenerarPdf(titulo+nroPdf, titulo, m.getTabla(tipo), m.getColums(tipo));
+                               nroPdf++;
+                           }
+                           else
+                           {
+                               if(e.getSource()==f.getAceptar())
+                               {
+                                   
+                               }
+                               else
+                               {
+                                 if(e.getSource()==f.getCancelar())
+                                     f.dispose();
+                               }
                            }
                        }
                     }
@@ -161,7 +168,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -172,7 +178,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
        {
            if(e.getSource()==s.getCambiarDatoJMenuItem())
            {
-               FormularioDeDatos f=new FormularioDeDatos(new javax.swing.JFrame(), true);
+               f=new FormularioDeDatos(new javax.swing.JFrame(), true, this, m);
                f.setVisible(true);
            }
            else

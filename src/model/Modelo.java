@@ -7,7 +7,6 @@
 package model;
 
 import controller.Controlador;
-import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
@@ -53,7 +52,7 @@ public class Modelo {
         aceptacionIncremento = AI;
         this.c = c;
         t = new Timer(500,c);
-        mih = new MejorIncrementoHabitaciones(c);
+        mih = new MejorIncrementoHabitaciones(this);
         mip = new MejorIncrementoPrecio(this);
         mc = new Combinado(this);
     }
@@ -87,41 +86,53 @@ public class Modelo {
     }
 
     public void setCantidadHabitaciones(int simple, int doble, int suitejr) {
+        cantidadHabitaciones = new int [3];
         cantidadHabitaciones[0] = simple;
         cantidadHabitaciones[1] = doble;
         cantidadHabitaciones[2] = suitejr;
+        reiniciar();
     }
 
     public void setPrecioActual(double simple, double doble, double suitejr) {
+        precioActual = new double [3];
         precioActual[0] = simple;
         precioActual[1] = doble;
         precioActual[2] = suitejr;
+        reiniciar();
     }
 
     public void setPrecioIncrementado(double simple, double doble, double suitejr) {
+        precioIncrementado=new double [3];
         precioIncrementado[0] = simple;
         precioIncrementado[1] = doble;
         precioIncrementado[2] = suitejr;
+        reiniciar();
     }
 
     public void setPreferenciaHabitaciones(double simple, double doble, double suitejr) {
+        preferenciaHabitaciones = new double [3];
         preferenciaHabitaciones[0] = simple;
         preferenciaHabitaciones[1] = doble;
         preferenciaHabitaciones[2] = suitejr;
+        reiniciar();
     }
 
     public void setAceptacionIncremento(double simple, double doble, double suitejr) {
+        aceptacionIncremento =new double [3];
         aceptacionIncremento[0] = simple;
         aceptacionIncremento[1] = doble;
         aceptacionIncremento[2] = suitejr;
+        reiniciar();
     }
     
     public void setGeneradorCongruencialMixto(int cMultiplicativa, int cAditiva, int modulo, int semilla) {
         gcm.asignarValores(cMultiplicativa, cAditiva, modulo, semilla);
+        reiniciar();
     }
     
     public void setGeneradorVariableTriangular(int a, int b, int c){
         gvt.asignarValores(a, b, c);
+        reiniciar();
     }
     
     public static int diasDelMes(int mes, int año){
@@ -191,8 +202,6 @@ public class Modelo {
             case MEJOR_HABITACIONES: return mih.getTabla();
             case MEJOR_PRECIO: return mip.getTabla();
             case MEJOR_COMBINACION: return mc.getTabla();
-            //case 2: return vph.getTablaVariacionPrecios();
-            //case 3: return mc.getTablaMejorCombinacion();
         }
         return null;
     }
@@ -200,6 +209,7 @@ public class Modelo {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getColumns();
             case MEJOR_PRECIO: return mip.getColumns();
+            case MEJOR_COMBINACION: return mc.getColumns();
         }
         return null;
     }
@@ -215,5 +225,9 @@ public class Modelo {
     {
         return cantidadHabitaciones[2];
     }
-    
+    void reiniciar(){
+        mih = new MejorIncrementoHabitaciones(this);
+        mip = new MejorIncrementoPrecio(this);
+        mc = new Combinado(this);
+    }
 }

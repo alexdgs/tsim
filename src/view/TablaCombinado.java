@@ -25,14 +25,6 @@ public class TablaCombinado extends javax.swing.JDialog {
                 "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
                 "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
                 "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
-                "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Total Ingreso Actual",
-                "D. Simple", "D. Doble", "D. Suite Jr.",
-                "D. sat. Simple", "D. sat. Doble", "D. sat. Suite Jr.",
-                "D. ins. Simple", "D. ins. Doble", "D. ins. Suite Jr.",
-                "I. Simple", "I. Doble", "I. Suite Jr.",
-                "Inc. Hab. Simple", "Inc. Hab. Doble", "Inc. Hab. Suite Jr.",
-                "Cant. Simple", "Cant. Doble", "Cant. Suite Jr.",
                 "Inc. Hab. Simple", "Inc. Hab. Doble", "Inc. Hab. Suite Jr.",
                 "I. Simple", "I. Doble", "I. Suite Jr.",
                 "D. Simple", "D. Doble", "D. Suite Jr.",
@@ -81,6 +73,7 @@ public class TablaCombinado extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
