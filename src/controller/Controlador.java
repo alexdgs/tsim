@@ -109,8 +109,9 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                     if(tipo==1)
                     {
                        // Start simulation
-                      m.play();
-                      s.setSimState(EN_EJECUCION);
+                        m.play();
+                        s.setSimState(EN_EJECUCION);
+                        
                       //s.cleanTextArea1();
                       //s.getjTextArea1().setText(m.informePrimerCaso()); //cambiar caso 
                     }

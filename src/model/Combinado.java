@@ -34,7 +34,7 @@ public class Combinado {
         precioIncrementado = modelo.getPrecioIncrementado();
         preferenciaHabitaciones = modelo.getPreferenciaHabitaciones();
         aceptacionIncremento = modelo.getAceptacionIncremento();
-        tabla = new Object[12][39];
+        tabla = new Object[12][47];
         mejoraSimple = false;
         mejoraDoble = false;
         mejoraSuite = false;
@@ -75,42 +75,52 @@ public class Combinado {
                 tabla[i][10] = (int)cantidadHabitaciones[0];
                 tabla[i][11] = (int)cantidadHabitaciones[1];
                 tabla[i][12] = (int)cantidadHabitaciones[2];
+                //incremento de numero de habitaciones actual
+                tabla[i][13] = (int)0;
+                tabla[i][14] = (int)0;
+                tabla[i][15] = (int)0;
                 //ingreso actual por mes, por tipo de habitacion
-                tabla[i][13] = (double)0.0;
-                tabla[i][14] = (double)0.0;
-                tabla[i][15] = (double)0.0;
-                //ingreso actual total por mes
                 tabla[i][16] = (double)0.0;
+                tabla[i][17] = (double)0.0;
+                tabla[i][18] = (double)0.0;
                 //demanda total acumulada con el precio incrementado por tipo de habitacion
-                tabla[i][17] = (int)0;
-                tabla[i][18] = (int)0;
                 tabla[i][19] = (int)0;
-                //demanda satisfecha total acumulada con el precio incrementado por tipo de habitacion
                 tabla[i][20] = (int)0;
                 tabla[i][21] = (int)0;
+                //demanda satisfecha total acumulada con el precio incrementado por tipo de habitacion
                 tabla[i][22] = (int)0;
-                //demanda insatisfecha total acumulada con el precio incrementado por tipo de habitacion
                 tabla[i][23] = (int)0;
                 tabla[i][24] = (int)0;
+                //demanda insatisfecha total acumulada con el precio incrementado por tipo de habitacion
                 tabla[i][25] = (int)0;
-                //ingreso con el precio incrementado por mes
-                tabla[i][26] = (double)0.0;
-                tabla[i][27] = (double)0.0;
-                tabla[i][28] = (double)0.0;
-                //incremento de numero de habitaciones
-                tabla[i][29] = (int)0;
-                tabla[i][30] = (int)0;
+                tabla[i][26] = (int)0;
+                tabla[i][27] = (int)0;
+                //cantidad actual de habitaciones
+                tabla[i][28] = (int)cantidadHabitaciones[0];
+                tabla[i][29] = (int)cantidadHabitaciones[1];
+                tabla[i][30] = (int)cantidadHabitaciones[2];
+                //incremento de numero de habitaciones con el precio incrementado
                 tabla[i][31] = (int)0;
-                //nuevo numero de habitaciones
                 tabla[i][32] = (int)0;
                 tabla[i][33] = (int)0;
-                tabla[i][34] = (int)0;
-                //ingreso con el incremento por mes, por tipo de habitacion
+                //ingreso con el precio incrementado por mes
+                tabla[i][34] = (double)0.0;
                 tabla[i][35] = (double)0.0;
                 tabla[i][36] = (double)0.0;
-                tabla[i][37] = (double)0.0;
+                //nuevo numero de habitaciones
+                tabla[i][37] = (int)0;
+                tabla[i][38] = (int)0;
+                tabla[i][39] = (int)0;
+                //nuevo precio de las habitaciones
+                tabla[i][40] = (double)0;
+                tabla[i][41] = (double)0;
+                tabla[i][42] = (double)0;
+                //ingreso con el incremento por mes, por tipo de habitacion
+                tabla[i][43] = (double)0.0;
+                tabla[i][44] = (double)0.0;
+                tabla[i][45] = (double)0.0;
                 //ingreso con el incremento total por mes
-                tabla[i][38] = (double)0.0;
+                tabla[i][46] = (double)0.0;
             }
             if(j < diasDelMes && indiceGenerador < n){
                 //generamos la demanda del dia
@@ -148,129 +158,164 @@ public class Combinado {
                     tabla[i][6] = (int)tabla[i][6] + demandaSuiteDiaT;
                     //no sumamos nada a la demanda insatisfecha porque en este caso toda la demanda se satisfizo
                 }
-                //calculamos el ingreso del dia y lo acumulamos al mensual
-                tabla[i][13] = (double)tabla[i][13] + (double)((int)tabla[i][4]*precioActual[0]);
-                tabla[i][14] = (double)tabla[i][14] + (double)((int)tabla[i][5]*precioActual[1]);
-                tabla[i][15] = (double)tabla[i][15] + (double)((int)tabla[i][6]*precioActual[2]);
-                //calculamos el ingreso total del dia y lo acumulamos al mensual
-                tabla[i][16] = (double)tabla[i][16] + (double)tabla[i][13] + (double)tabla[i][14] + (double)tabla[i][15];
-                //calculamos los valores de demanda por tipo de habitacion para el incremento de precios
+                //calculamos los valores de demanda del dia por tipo de habitacion para el incremento de precios
                 demandaSimpleDiaT = (int)(demandaSimpleDiaT*aceptacionIncremento[0]);
                 demandaDobleDiaT = (int)(demandaDobleDiaT*aceptacionIncremento[1]);
                 demandaSuiteDiaT = (int)(demandaSuiteDiaT*aceptacionIncremento[2]);
                 //acumulamos los valores de demanda por tipo de habitacion para el incremento de precios al acumulado mensual
-                tabla[i][17] = (int)tabla[i][17] + demandaSimpleDiaT;
-                tabla[i][18] = (int)tabla[i][18] + demandaDobleDiaT;
-                tabla[i][19] = (int)tabla[i][19] + demandaSuiteDiaT;
+                tabla[i][19] = (int)tabla[i][19] + demandaSimpleDiaT;
+                tabla[i][20] = (int)tabla[i][20] + demandaDobleDiaT;
+                tabla[i][21] = (int)tabla[i][21] + demandaSuiteDiaT;
                 //acumulamos la demanda satisfecha e insatisfecha total por mes por habitacion para el incremento
                 if(demandaSimpleDiaT>cantidadHabitaciones[0]){
-                    tabla[i][20] = (int)tabla[i][20] + cantidadHabitaciones[0];
-                    tabla[i][23] = (int)tabla[i][23]+ (demandaSimpleDiaT - cantidadHabitaciones[0]);
+                    tabla[i][22] = (int)tabla[i][22] + cantidadHabitaciones[0];
+                    tabla[i][25] = (int)tabla[i][25]+ (demandaSimpleDiaT - cantidadHabitaciones[0]);
                 }
                 else{
-                    tabla[i][20] = (int)tabla[i][20] + demandaSimpleDiaT;
+                    tabla[i][22] = (int)tabla[i][22] + demandaSimpleDiaT;
                     //no sumamos nada a la demanda insatisfecha porque en este caso toda la demanda se satisfizo
                 }
                 if(demandaDobleDiaT>cantidadHabitaciones[1]){
-                    tabla[i][21] = (int)tabla[i][21] + cantidadHabitaciones[1];
-                    tabla[i][24] = (int)tabla[i][24] + (demandaDobleDiaT - cantidadHabitaciones[1]);
+                    tabla[i][23] = (int)tabla[i][23] + cantidadHabitaciones[1];
+                    tabla[i][26] = (int)tabla[i][26] + (demandaDobleDiaT - cantidadHabitaciones[1]);
                 }
                 else{
-                    tabla[i][21] = (int)tabla[i][21] + demandaDobleDiaT;
+                    tabla[i][23] = (int)tabla[i][23] + demandaDobleDiaT;
                     //no sumamos nada a la demanda insatisfecha porque en este caso toda la demanda se satisfizo
                 }
                 if(demandaSuiteDiaT>cantidadHabitaciones[2]){
-                    tabla[i][22] = (int)tabla[i][22] + cantidadHabitaciones[2];
-                    tabla[i][25] = (int)tabla[i][25] + (demandaSuiteDiaT - cantidadHabitaciones[2]);
+                    tabla[i][24] = (int)tabla[i][24] + cantidadHabitaciones[2];
+                    tabla[i][27] = (int)tabla[i][27] + (demandaSuiteDiaT - cantidadHabitaciones[2]);
                 }
                 else{
-                    tabla[i][22] = (int)tabla[i][22] + demandaSuiteDiaT;
+                    tabla[i][24] = (int)tabla[i][24] + demandaSuiteDiaT;
                     //no sumamos nada a la demanda insatisfecha porque en este caso toda la demanda se satisfizo
                 }
-                //calculamos en ingreso con el precio incrementado y lo acumulamos al mensual
-                tabla[i][26] = (double)tabla[i][26] + (double)((int)tabla[i][20]*precioIncrementado[0]);
-                tabla[i][27] = (double)tabla[i][27] + (double)((int)tabla[i][21]*precioIncrementado[1]);
-                tabla[i][28] = (double)tabla[i][28] + (double)((int)tabla[i][22]*precioIncrementado[2]);
                 
                 j++;
                 indiceGenerador++;
             }
             else{
-                //cuando se acaba el mes calculamos acumulamos los ingresos generados en el mes a un acumulado anual
-                //actual
-                ingresoSimpleAct += (double)tabla[i][13];
-                ingresoDobleAct += (double)tabla[i][14];
-                ingresoSuiteAct += (double)tabla[i][15];
-                //incrementado
-                ingresoSimpleInc += (double)tabla[i][26];
-                ingresoDobleInc += (double)tabla[i][27];
-                ingresoSuiteInc += (double)tabla[i][28];
                 i++;
                 j = 0;
             }
         }
         else{
-            //cuando termina el año comparamos los ingresos anuales para saber en que tipo de habitacion se debe increnetar el numero de habitaciones
-            //por el momento asumimos que el actual es el mejor
-            int indiceSimple = 7;
-            int indiceDoble = 8;
-            int indiceSuite = 9;
-            //comparamos con el incrementado y re-asignamos el indice y el mejorado, de ser necesario
-            if(ingresoSimpleAct < ingresoSimpleInc){
+            //cuando se acaba el año calculamos los nuevos numeros de habitaciones (actual y precio incrementado) y sus respectivos ingresos
+            //obtenemos el numero de habitaciones a incrementar
+            int incActSimple = 0;
+            int incActDoble = 0;
+            int incActSuite = 0;
+            int incIncSimple = 0;
+            int incIncDoble = 0;
+            int incIncSuite = 0;
+            for(int k = 0; k < 12; k++){
+                incActSimple += (int)tabla[k][7];
+                incActDoble += (int)tabla[k][8];
+                incActSuite += (int)tabla[k][9];
+                incIncSimple += (int)tabla[k][25];
+                incIncDoble += (int)tabla[k][26];
+                incIncSuite += (int)tabla[k][27];
+            }
+            incActSimple = (int)((incActSimple/30)/12);
+            incActDoble = (int)((incActDoble/30)/12);
+            incActSuite = (int)((incActSuite/30)/12);
+            incIncSimple = (int)((incIncSimple/30)/12);
+            incIncDoble = (int)((incIncDoble/30)/12);
+            incIncSuite = (int)((incIncSuite/30)/12);
+            //declaramos una variable para acumular los ingresos por tipo de habitacion
+            double ingAcumActSimple = 0.0;
+            double ingAcumActDoble = 0.0;
+            double ingAcumActSuite = 0.0;
+            double ingAcumIncSimple = 0.0;
+            double ingAcumIncDoble = 0.0;
+            double ingAcumIncSuite = 0.0;
+            //llenamos los nuevos numeros de habitaciones y calculamos el ingreso de cada tipo
+            for(int k = 0; k < 12; k++){
+                //nuevo numero de habitaciones actual
+                tabla[k][13] = cantidadHabitaciones[0] + incActSimple;
+                tabla[k][14] = cantidadHabitaciones[1] + incActDoble;
+                tabla[k][15] = cantidadHabitaciones[2] + incActSuite;
+                //nuevo numero de habitaciones con el incremento de precios
+                tabla[k][31] = cantidadHabitaciones[0] + incIncSimple;
+                tabla[k][32] = cantidadHabitaciones[1] + incIncDoble;
+                tabla[k][33] = cantidadHabitaciones[2] + incIncSuite;
+                //calculamos el ingreso actual por mes, por tipo de habitacion
+                if((int)tabla[k][13] < (int)tabla[k][1]/30)
+                    tabla[k][16] = (double)((int)tabla[k][13]*precioActual[0]*30);
+                else
+                    tabla[k][16] = (double)((int)tabla[k][1]*precioActual[0]);
+                if((int)tabla[k][14] < (int)tabla[k][2]/30)
+                    tabla[k][17] = (double)((int)tabla[k][14]*precioActual[1]*30);
+                else
+                    tabla[k][17] = (double)((int)tabla[k][2]*precioActual[1]);
+                if((int)tabla[k][15] < (int)tabla[k][3]/30)
+                    tabla[k][18] = (double)((int)tabla[k][15]*precioActual[2]*30);
+                else
+                    tabla[k][18] = (double)((int)tabla[k][3]*precioActual[2]);
+                //acumulamos al ingreso anual actual
+                ingAcumActSimple += (double)tabla[k][16];
+                ingAcumActDoble += (double)tabla[k][17];
+                ingAcumActSuite += (double)tabla[k][18];
+                //calculamos el ingreso con el precio incrementado por mes
+                if((int)tabla[k][31] < (int)tabla[k][19]/30)
+                    tabla[k][34] = (double)((int)tabla[k][31]*precioIncrementado[0]*30);
+                else
+                    tabla[k][34] = (double)((int)tabla[k][19]*precioIncrementado[0]);
+                if((int)tabla[k][32] < (int)tabla[k][20]/30)
+                    tabla[k][35] = (double)((int)tabla[k][32]*precioIncrementado[1]*30);
+                else
+                    tabla[k][35] = (double)((int)tabla[k][20]*precioIncrementado[1]);
+                if((int)tabla[k][33] < (int)tabla[k][21]/30)
+                    tabla[k][36] = (double)((int)tabla[k][33]*precioIncrementado[2]*30);
+                else
+                    tabla[k][36] = (double)((int)tabla[k][21]*precioIncrementado[2]);
+                //acumulamos al ingreso anual con el incremento de precios
+                ingAcumIncSimple += (double)tabla[k][34];
+                ingAcumIncDoble += (double)tabla[k][35];
+                ingAcumIncSuite += (double)tabla[k][36];
+            }
+            //definimos el nuevo numero de habitaciones y los nuevos precios
+            if(ingAcumActSimple < ingAcumIncSimple)
                 mejoraSimple = true;
-                indiceSimple = 23;
-            }
-            if(ingresoDobleAct < ingresoDobleInc){
+            if(ingAcumActDoble < ingAcumIncDoble)
                 mejoraDoble = true;
-                indiceDoble = 24;
-            }
-            if(ingresoSuiteAct < ingresoSuiteInc){
+            if(ingAcumActSuite < ingAcumIncSuite)
                 mejoraSuite = true;
-                indiceSuite = 25;
-            }
-            //declaramos variables para sacar un promedio de la demanda insatisfecha por tipo de habitacion
-            int demInsSimple = 0;
-            int demInsDoble = 0;
-            int demInsSuite = 0;
-            //acumulamos la demanda insatisfecha
-            for(int k = 0; k < 12; k++){
-                demInsSimple += (int)tabla[k][indiceSimple];
-                demInsDoble += (int)tabla[k][indiceDoble];
-                demInsSuite += (int)tabla[k][indiceSuite];
-            }
-            //sacamos el promedio y este se vuelve el incremento de habitaciones para cada tipo
-            demInsSimple = (int)((demInsSimple/12)/30);
-            demInsDoble = (int)((demInsDoble/12)/30);
-            demInsSuite = (int)((demInsSuite/12)/30);
-            //calculamos en nuevo numero de habitaciones por tipo
-            int numHabIncSimple = (int)(demInsSimple) + cantidadHabitaciones[0];
-            int numHabIncDoble = (int)(demInsDoble) + cantidadHabitaciones[1];
-            int numHabIncSuite = (int)(demInsSuite) + cantidadHabitaciones[2];
-            //llenamos los valores faltantes de la tabla
-            for(int k = 0; k < 12; k++){
-                //asignamos los valores del incremento de habitaciones a la tabla
-                tabla[k][29] = demInsSimple;
-                tabla[k][30] = demInsDoble;
-                tabla[k][31] = demInsSuite;
-                //asignamos los valores del nuevo numero de habitaciones a la tabla
-                tabla[k][32] = numHabIncSimple;
-                tabla[k][33] = numHabIncDoble;
-                tabla[k][34] = numHabIncSuite;
-                //calculamos el nuevo ingreso son todas las mejoras por tipo de habitacion
-                if(mejoraSimple)
-                    tabla[k][35] = (double)numHabIncSimple*precioIncrementado[0];
-                else
-                    tabla[k][35] = numHabIncSimple*precioActual[0];
-                if(mejoraDoble)
-                    tabla[k][36] = numHabIncDoble*precioIncrementado[1];
-                else
-                    tabla[k][36] = numHabIncDoble*precioActual[1];
-                if(mejoraSuite)
-                    tabla[k][37] = numHabIncSuite*precioIncrementado[2];
-                else
-                    tabla[k][37] = numHabIncSuite*precioActual[2];
-                //calculamos el nuevo ingreso total por mes con todas las mejoras
-                tabla[k][38] = (double)tabla[k][35] +(double)tabla[k][36] +(double)tabla[k][37];
+            for(int k = 0; k <12; k++){
+                //nuevo numero de habitaciones, nuevo precio e ingreso por mes, por tipo de habitacion
+                if(mejoraSimple){
+                    tabla[k][37] = (int)tabla[k][31];
+                    tabla[k][40] = precioIncrementado[0];
+                    tabla[k][43] = tabla[k][34];
+                }
+                else{
+                    tabla[k][37] = (int)tabla[k][13];
+                    tabla[k][40] = precioActual[0];
+                    tabla[k][43] = tabla[k][16];
+                }
+                if(mejoraDoble){
+                    tabla[k][38] = (int)tabla[k][32];
+                    tabla[k][41] = precioIncrementado[1];
+                    tabla[k][44] = tabla[k][35];
+                }
+                else{
+                    tabla[k][38] = (int)tabla[k][14];
+                    tabla[k][41] = precioActual[1];
+                    tabla[k][44] = tabla[k][17];
+                }
+                if(mejoraSuite){
+                    tabla[k][39] = (int)tabla[k][33];
+                    tabla[k][42] = precioIncrementado[2];
+                    tabla[k][45] = tabla[k][36];
+                }
+                else{
+                    tabla[k][39] = (int)tabla[k][15];
+                    tabla[k][42] = precioActual[2];
+                    tabla[k][45] = tabla[k][18];
+                }
+                //ingreso con el incremento total por mes
+                tabla[k][46] = (double)tabla[k][43] + (double)tabla[k][44] + (double)tabla[k][45];
             }
             i = 0;
             j = 0;

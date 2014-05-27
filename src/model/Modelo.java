@@ -180,6 +180,7 @@ public class Modelo {
         switch(op) {
             case MEJOR_HABITACIONES: return mih.getInforme();
             case MEJOR_PRECIO: return mip.getInforme();
+            case MEJOR_COMBINACION: return mc.getInforme();
         }
         return null;
     }
