@@ -6,7 +6,6 @@
 
 package model;
 
-import java.util.ArrayList;
 import static model.Modelo.diasDelMes;
 
 /**
@@ -14,6 +13,8 @@ import static model.Modelo.diasDelMes;
  * @author Jose
  */
 public class MejorIncrementoPrecio {
+    
+    Modelo modelo;
     
     GeneradorCongruencialMixto gcm;
     GeneradorVariableTriangular gvt;
@@ -32,7 +33,28 @@ public class MejorIncrementoPrecio {
     double ingAcumIncDoble;
     double ingAcumIncSuite;
     
+    /*
+    * The real-time data retrieval array
+    * This Object array gets data from model and send it to Control to Simulator
+    * for animation purposes. As new data is generated at every step, this array
+    * is sent at every step.
+    * 
+    * data[0] (int) daily generated demand
+    * data[1] (int) daily demand for "Simple" roooms for new price
+    + data[2] (int) daily demand for "Doble" rooms for new price
+    * data[3] (int) daily demand for "Suite Jr." rooms for new price
+    * data[4] (double) monthly overall revenue for new price
+    * data[7] (int) current month
+    * data[8] (boolean) false = daily report, true = monthly report
+    * data[9] (boolean) false = sim not finished, true = sim finished
+    */
+    
+    Object data[];
+    int dia;
+    
     public MejorIncrementoPrecio(Modelo modelo){
+        this.modelo = modelo;
+        
         gcm = modelo.getGeneradorCongruencialMixto();
         gvt = modelo.getGeneradorVariableTriangular();
         cantidadHabitaciones = modelo.getCantidadHabitaciones();
@@ -55,10 +77,13 @@ public class MejorIncrementoPrecio {
         ingAcumIncSimple = 0.0;
         ingAcumIncDoble = 0.0;
         ingAcumIncSuite = 0.0;
+        
+        data = new Object[10]; // Data rerieval declaration
+        data[9] = false; // Default
+        dia = 0;
     }
     
-    public boolean nextStep(){
-        boolean res = false;
+    public Object[] nextStep(){
         if(i < 12){
             if(j == 0){
                 //calculamos cuantos dias hay en el mes actual y formateamos la tupla correpondiente
@@ -139,6 +164,14 @@ public class MejorIncrementoPrecio {
                     tabla[i][10] = (int)tabla[i][10] + demandaSuiteDiaT;
                 j++;
                 indiceGenerador++;
+                
+                // Data retrieval block
+                data[0] = demandaSimpleDiaT + demandaDobleDiaT + demandaSuiteDiaT;
+                data[1] = demandaSimpleDiaT;
+                data[2] = demandaDobleDiaT;
+                data[3] = demandaSuiteDiaT;
+                data[6] = ++dia;
+                data[8] = false;
             }
             else{
                 //cuando se acaba el mes calculamos el valor de los ingresos generados por las habitaciones
@@ -158,8 +191,14 @@ public class MejorIncrementoPrecio {
                 ingAcumIncDoble += (double)tabla[i][12];
                 ingAcumIncSuite += (double)tabla[i][13];
                 tabla[i][14] = (double)tabla[i][11]+(double)tabla[i][12]+(double)tabla[i][13];
-                i++;
                 j = 0;
+                
+                // Data retrieval block
+                data[4] = tabla[i][14];
+                data[7] = i+1;
+                data[8] = true;
+                
+                i++;
             }
         }
         else{
@@ -171,7 +210,7 @@ public class MejorIncrementoPrecio {
                 mejoraDoble = true;
             if(ingAcumActSuite < ingAcumIncSuite)
                 mejoraSuite = true;
-            res = true;
+            
             for(int k = 0; k <12; k++){
                 //nuevo numero de habitaciones, nuevo precio e ingreso por mes, por tipo de habitacion
                 if(mejoraSimple){
@@ -207,8 +246,10 @@ public class MejorIncrementoPrecio {
                 //ingreso con el incremento total por mes
                 tabla[k][24] = (double)tabla[k][21] + (double)tabla[k][22] + (double)tabla[k][23];
             }
+            
+            data[9] = true; // We're done!
         }
-        return res;
+        return data;
     }
     
     public Object[][] getTabla(){

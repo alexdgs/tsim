@@ -244,14 +244,20 @@ public class Modelo {
         }
     }
       
-    // Start simulation
+    // Start simulation (re-create model for clean start)
     public void play() {
-        t.start();
+        reiniciar();
+        t.restart();
     }
     
-    // Stop simulation
+    // Stop/Pause simulation (timer only)
     public void stop() {
         t.stop();
+    }
+    
+    // Resume simulation (dont reset)
+    public void resume() {
+        t.start();
     }
     
     // Set simulation speed (timer delay)
@@ -260,7 +266,7 @@ public class Modelo {
     }
     
     // Do next simulaton step and send response to Controller
-    public boolean nextStep(int op) {
+    public Object[] nextStep(int op) {
         switch(op) {
             case MEJOR_HABITACIONES:
                 ultimaOpcionCorrida = 1;
@@ -272,7 +278,7 @@ public class Modelo {
                 ultimaOpcionCorrida = 3;
                 return mc.nextStep();
         }
-        return true;
+        return null;
     }
     
     public String getResultText(int op) {
@@ -321,5 +327,9 @@ public class Modelo {
 
     private int getUltimaOpcionCorrida() {
         return ultimaOpcionCorrida;
+    }
+    
+    public int getTotalHabitaciones() {
+        return cantidadHabitaciones[0] + cantidadHabitaciones[1] + cantidadHabitaciones[2];
     }
 }

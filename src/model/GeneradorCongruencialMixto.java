@@ -7,6 +7,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -44,6 +45,7 @@ public class GeneradorCongruencialMixto {
             xn = aux;
             i++;
         }
+        Collections.shuffle(lista);
         return lista;
     }
 

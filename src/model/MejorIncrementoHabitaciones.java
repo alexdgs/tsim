@@ -31,6 +31,27 @@ public class MejorIncrementoHabitaciones {
     int incSimple, incDoble, incSuite;
     Object[][] tabla;
     
+    /*
+    * The real-time data retrieval array
+    * This Object array gets data from model and send it to Control to Simulator
+    * for animation purposes. As new data is generated at every step, this array
+    * is sent at every step.
+    * 
+    * data[0] (int) daily generated demand
+    * data[1] (int) daily demand for "Simple" roooms
+    + data[2] (int) daily demand for "Doble" rooms
+    * data[3] (int) daily demand for "Suite Jr." rooms
+    * data[4] (double) monthly overall revenue
+    * data[5] - unused
+    * data[6] (int) current day
+    * data[7] (int) current month
+    * data[8] (boolean) false = daily report, true = monthly report
+    * data[9] (boolean) false = sim not finished, true = sim finished
+    */
+    
+    Object data[];
+    int dia; // Daily counter
+    
     public MejorIncrementoHabitaciones(Modelo modelo) {
         gcm = modelo.getGeneradorCongruencialMixto();
         gvt = modelo.getGeneradorVariableTriangular();
@@ -43,10 +64,14 @@ public class MejorIncrementoHabitaciones {
         incDoble = 0;
         incSuite = 0;
         tabla = new Object[12][33];
+        
+        data = new Object[10]; // Data rerieval declaration
+        data[9] = false; // Default
+        dia = 0;
     }
     
     // Processes next simulation step (a single day)
-    public boolean nextStep(){
+    public Object[] nextStep(){
         if(i < 12){
             // If isn't year end, do math...
             if(j < 1) {
@@ -115,6 +140,14 @@ public class MejorIncrementoHabitaciones {
                 j++;
                 // System.out.print(j + " "); // Debug output
                 indiceGenerador++;
+                
+                // Data retrieval block
+                data[0] = demandaDia;
+                data[1] = demandaSimpleDia;
+                data[2] = demandaDobleDia;
+                data[3] = demandaSuiteDia;
+                data[6] = ++dia;
+                data[8] = false;
             } else {
                 // If we reached end of month, create table registry
                 tabla[i][1] = (int)((int)tabla[i][1]/diasDelMes);
@@ -150,17 +183,24 @@ public class MejorIncrementoHabitaciones {
                 incDoble = incDoble + (int)tabla[i][8];
                 incSuite = incSuite + (int)tabla[i][9];
                 j = 0; // Reset current day
-                i++; // Go next month
                 // System.out.println(); // Debug output
+                
+                // Data retrieval block
+                data[4] = tabla[i][22];
+                data[7] = i+1;
+                data[8] = true;
+                
+                i++; // Go next month
             }
-            return false; // We're not ready yet
         } else {
             // If we reached end of year, do final work
             incSimple = (int)incSimple/12;
             incDoble = (int)incDoble/12;
             incSuite = (int)incSuite/12;
-            return true; // All done, notify
+            
+            data[9] = true; // We're done!
         }
+        return data;
     }
     
     // Builds and returns result table

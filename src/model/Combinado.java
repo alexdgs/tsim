@@ -26,6 +26,25 @@ public class Combinado {
     Double ingresoSimpleAct, ingresoDobleAct, ingresoSuiteAct, ingresoSimpleInc, ingresoDobleInc, ingresoSuiteInc;
     int i,j,diasDelMes,n,indiceGenerador;
     
+    /*
+    * The real-time data retrieval array
+    * This Object array gets data from model and send it to Control to Simulator
+    * for animation purposes. As new data is generated at every step, this array
+    * is sent at every step.
+    * 
+    * data[0] (int) daily generated demand
+    * data[1] (int) daily demand for "Simple" roooms for new price
+    + data[2] (int) daily demand for "Doble" rooms for new price
+    * data[3] (int) daily demand for "Suite Jr." rooms for new price
+    * data[4] (double) monthly overall revenue for new price
+    * data[7] (int) current month
+    * data[8] (boolean) false = daily report, true = monthly report
+    * data[9] (boolean) false = sim not finished, true = sim finished
+    */
+    
+    Object data[];
+    int dia;
+    
     public Combinado(Modelo modelo){
         gcm = modelo.getGeneradorCongruencialMixto();
         gvt = modelo.getGeneradorVariableTriangular();
@@ -49,10 +68,10 @@ public class Combinado {
         diasDelMes = 0;
         n = modelo.getGeneradorCongruencialMixto().getL();
         indiceGenerador = 0;
+        dia = 0;
     }
     
-    public boolean nextStep(){
-        boolean res = false;
+    public Object[] nextStep(){
         if(i < 12){
             if(j == 0){
                 //calculamos cuantos dias hay en el mes actual y formateamos la tupla correpondiente
@@ -194,10 +213,24 @@ public class Combinado {
                 
                 j++;
                 indiceGenerador++;
+                
+                // Data retrieval block
+                data[0] = demandaDia;
+                data[1] = demandaSimpleDiaT;
+                data[2] = demandaDobleDiaT;
+                data[3] = demandaSuiteDiaT;
+                data[6] = ++dia;
+                data[8] = false;
             }
             else{
-                i++;
                 j = 0;
+                
+                // Data retrieval block
+                data[4] = -1; // Revenue not available!
+                data[7] = i+1;
+                data[8] = true;
+                
+                i++;
             }
         }
         else{
@@ -317,9 +350,9 @@ public class Combinado {
                 //ingreso con el incremento total por mes
                 tabla[k][46] = (double)tabla[k][43] + (double)tabla[k][44] + (double)tabla[k][45];
             }
-            res = true;
+            data[9] = true;
         }
-        return res;
+        return data;
     }
     
     public Object[][] getTabla(){

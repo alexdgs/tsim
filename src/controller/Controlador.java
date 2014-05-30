@@ -38,7 +38,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     final int DETENIDO = 4;
     final int EN_EJECUCION = 5;
     final int PAUSADO = 6;
-    final int COMPLETADO = 7;
+    final int COMPLETADO = 7; // Distinct from stopped
     
     Menu menu;
     Modelo m;
@@ -48,7 +48,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     MostrarMejorOpcion mmo;
     MejorOpcion mo;
     public int tipo;
-    int estado;
+    int estado; // Flag for sim state
     int nroGraficoPdf;
     int nroMejorOpcionPdf;
     
@@ -58,22 +58,24 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         this.s = s;
         g = new Grafico();
         mo=new MejorOpcion();
-        tipo=2;
-        estado = DETENIDO;
+        tipo = MEJOR_HABITACIONES; // Default sim type
+        estado = DETENIDO; // Default sim state
         nroGraficoPdf=1;
         nroMejorOpcionPdf=1;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object[] data = m.nextStep(tipo); // Retrieve data
         // If simulation is complete, stop and enable results button
-        if(m.nextStep(tipo)) {
+        if((boolean)data[9]) {
             m.stop();
-            s.enableResults(true,m.getResultText(tipo));
-            s.setSimState(DETENIDO);
-            s.getJBGrafico().setEnabled(true);
-            s.getPrintJButton().setEnabled(true);
+            s.showText(m.getResultText(tipo));
+            s.enableResults(true);
+            s.setSimState(COMPLETADO);
             mo.comparar(m.getTabla(tipo), m);
+            estado = COMPLETADO;
         }
+        s.updateView(data); // Send data to Simulador
     }
 
     @Override
@@ -81,49 +83,63 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         if(e.getSource()==menu.getLabelMejorPrecio() || e.getSource()==menu.getLabelCantidadHabitaciones() || e.getSource()==menu.getLabelMejorCombinacion())
         {
             menu.mostrar(false);
-            
-            tipo=2;
             s.cleanTextArea1();
             s.disableButton();
             
-            if(e.getSource()==menu.getLabelCantidadHabitaciones()){
-               tipo=1;
-               s.mostrarOpcion(1);
-            }
-            else
-            {
-              if(e.getSource()==menu.getLabelMejorCombinacion())
-              {
-                tipo=3;
-                s.mostrarOpcion(3);
-              }
-              else {
-                  s.mostrarOpcion(2);
-              }
-            }
+            if(e.getSource()==menu.getLabelCantidadHabitaciones()) tipo = MEJOR_HABITACIONES;
+            else if(e.getSource()==menu.getLabelMejorCombinacion()) tipo = MEJOR_COMBINACION;
+            else tipo = MEJOR_PRECIO;
+            
+            s.mostrarOpcion(tipo,m.getCantidadHabitaciones());
         }
-        else{
+        else
+            // Time button handlers (regardless sim type)
             if(e.getSource()==s.getJBPlay())
             {
-                if(tipo==2)
-                {
-                    m.play();
-                    s.setSimState(EN_EJECUCION);
-                }
-                else
-                    if(tipo==1)
-                    {
-                       // Start simulation
-                        m.play();
+                if(estado != EN_EJECUCION) {
+                    if(estado == DETENIDO) {
                         s.setSimState(EN_EJECUCION);
+                        estado = EN_EJECUCION;
+                        m.play();
                     }
-                    else{
-                        if(tipo == 3){
-                            m.play();
+                    else if(estado == PAUSADO) {
+                        s.setSimState(EN_EJECUCION);
+                        estado = EN_EJECUCION;
+                        m.resume();
+                    }
+                    else if(estado == COMPLETADO)
+                        if((JOptionPane.showConfirmDialog(s, "Un proceso de simulación ha sido completado."
+                                + "Si lo\nreinicia perderá los datos no guardados.\n¿Desea continuar?",
+                                "Iniciar simulación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE)) == JOptionPane.OK_OPTION)
+                        {
                             s.setSimState(EN_EJECUCION);
+                            estado = EN_EJECUCION;
+                            m.play();
                         }
+                }
+            } else if(e.getSource()==s.getJBStop())
+            {
+                if(estado != DETENIDO) {
+                    m.stop();
+                    s.setSimState(DETENIDO);
+                    s.enableResults(false);
+                    estado = DETENIDO;
+                }
+            } else if(e.getSource()==s.getJBPause())
+            {
+                if(estado != DETENIDO && estado != COMPLETADO) {
+                    if(estado == EN_EJECUCION) {
+                        m.stop();
+                        s.setSimState(PAUSADO);
+                        estado = PAUSADO;
+                    } else if(estado == PAUSADO) {
+                        s.setSimState(EN_EJECUCION);
+                        estado = EN_EJECUCION;
+                        m.resume();
                     }
-            }
+                }
+            } else if(e.getSource()==s.getJBFirst()) s.setSlider(s.getSlider() - 100);
+             else if(e.getSource()==s.getJBLast()) s.setSlider(s.getSlider() + 100);
             else{
                 if(e.getSource()==s.getJBVerResultados())
                 {
@@ -192,7 +208,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                     }
                 }
 
-            }
         }
     }
 
@@ -243,5 +258,9 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     
     public void showMenu(boolean b) {
         menu.setVisible(b);
+    }
+
+    public int getTipo() {
+        return tipo;
     }
 }
