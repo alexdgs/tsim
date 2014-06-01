@@ -19,7 +19,7 @@ public class Splash extends JFrame implements Runnable{
     /** Creates new form Splash */
     public Splash() {
         JLabel label = new JLabel();
-        ImageIcon icon = new ImageIcon("src/img/hotel_diplomat1.jpg");
+        ImageIcon icon = new ImageIcon("src/img/splash.png");
         label.setIcon(icon);
         add(label);
         setUndecorated(true);
