@@ -458,6 +458,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     private void mostrarResultados()
     {
-        r = new Reporte(m.getTabla(tipo), tipo, s.mostrarResultados(m.getTabla(tipo),tipo), mostrarMejorOpcion(), this, new JFrame(), true);
+        r = new Reporte(m.getTabla(tipo), tipo, s.mostrarResultados(m.getTabla(tipo),tipo), mostrarMejorOpcion(), this);
     }
 }

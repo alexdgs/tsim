@@ -54,13 +54,10 @@ public class Reporte extends JDialog implements Printable {
     private JPanel tabGraficoDE;
     private JPanel tabMejorO;
     private JPanel panelImprimir;
-   
     
     
-    
-    public Reporte(Object [][] tabla, int opcion, JPanel panelTabla, JPanel panelMejorOpcion, Controlador c, Frame parent, boolean modal) 
+    public Reporte(Object [][] tabla, int opcion, JPanel panelTabla, JPanel panelMejorOpcion, Controlador c) 
     {
-        super(parent, modal);
         this.tabla = tabla;
         this.opcion = opcion;
         this.panelTabla = panelTabla;
