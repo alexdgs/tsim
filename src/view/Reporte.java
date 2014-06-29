@@ -219,9 +219,7 @@ public class Reporte extends JDialog implements Printable {
     {
         if (pageIndex > 0) return NO_SUCH_PAGE;
         Graphics2D g2d = (Graphics2D)graphics;
-        
-        g2d.translate(  pageFormat.getImageableX()+70, 
-                        pageFormat.getImageableY()+130);
+        g2d.translate(pageFormat.getImageableX()+70, pageFormat.getImageableY()+130);
         g2d.scale(0.6, 0.6); 
         panelImprimir.printAll(graphics);
         return PAGE_EXISTS;                
