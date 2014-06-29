@@ -66,7 +66,13 @@ public class TablaCombinado extends javax.swing.JDialog {
         panel = new javax.swing.JPanel();
         panelTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        combinadoJTable = new javax.swing.JTable();
+        combinadoJTable = new javax.swing.JTable()
+        {
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        ;
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

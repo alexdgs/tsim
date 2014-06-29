@@ -10,6 +10,7 @@ import controller.Controlador;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
@@ -57,8 +58,9 @@ public class Reporte extends JDialog implements Printable {
     
     
     
-    public Reporte(Object [][] tabla, int opcion, JPanel panelTabla, JPanel panelMejorOpcion, Controlador c)
+    public Reporte(Object [][] tabla, int opcion, JPanel panelTabla, JPanel panelMejorOpcion, Controlador c, Frame parent, boolean modal) 
     {
+        super(parent, modal);
         this.tabla = tabla;
         this.opcion = opcion;
         this.panelTabla = panelTabla;
@@ -80,6 +82,7 @@ public class Reporte extends JDialog implements Printable {
         this.getContentPane().setLayout(new BorderLayout());
         this.setSize(new Dimension(800, 650));
         this.setTitle("Reportes");
+        this.setResizable(false);
        
         panel = new JPanel(new BorderLayout());
         panel.setPreferredSize(new Dimension(750, 650));

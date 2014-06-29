@@ -59,7 +59,13 @@ public class TablaVariacionPrecios extends javax.swing.JDialog {
         panelTabla = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        precioJTable = new javax.swing.JTable();
+        precioJTable = new javax.swing.JTable()
+        {
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        ;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 

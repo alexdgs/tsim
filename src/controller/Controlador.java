@@ -412,7 +412,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     }
 
     private void crearVentanaAcercaDe(MouseEvent e) {
-        AcercaDe acerca=new AcercaDe(new javax.swing.JFrame(), true);
+        AcercaDe acerca=new AcercaDe(new JFrame(), true);
         acerca.setVisible(true);
     }
 
@@ -458,6 +458,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     private void mostrarResultados()
     {
-        r = new Reporte(m.getTabla(tipo), tipo, s.mostrarResultados(m.getTabla(tipo),tipo), mostrarMejorOpcion(), this);
+        r = new Reporte(m.getTabla(tipo), tipo, s.mostrarResultados(m.getTabla(tipo),tipo), mostrarMejorOpcion(), this, new JFrame(), true);
     }
 }

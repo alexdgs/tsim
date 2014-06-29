@@ -64,7 +64,13 @@ public class TablaMejorIncremento extends javax.swing.JPanel
         panelTabla = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        incrementoJTable = new javax.swing.JTable();
+        incrementoJTable = new javax.swing.JTable()
+        {
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        ;
 
         panel.setBackground(new java.awt.Color(0, 0, 51));
 
